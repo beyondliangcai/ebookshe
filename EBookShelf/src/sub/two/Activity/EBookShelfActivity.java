@@ -36,6 +36,8 @@ public class EBookShelfActivity extends Activity {
 	public	String result = null;
 	public File[] currentfiles;
 	public File Ebookdir;
+	
+	
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
