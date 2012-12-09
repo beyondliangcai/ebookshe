@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" 
+    android:id="@+id/mainlayout"
+    android:background="@drawable/background">
+    
+    <RelativeLayout 
+        android:id="@+id/main_top_layout"
+        android:layout_width="fill_parent"
+        android:layout_height="40dp"
+        android:background="@drawable/login_top_bg">      
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="23dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="5dp"
+            android:layout_centerInParent="true"
+            android:textSize="17sp"
+            android:textStyle="bold"
+            android:textColor="#ffffff"
+            android:text="@string/app_name2"
+           />
+    </RelativeLayout>
+    <ScrollView 
+        android:id="@+id/scrollview_in_fr"
+        android:scrollbars="vertical"
+        android:layout_width="fill_parent"
+        android:layout_weight="4"
+        android:layout_height="wrap_content">
+        <LinearLayout 
+            android:id="@+id/main_shelf"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <include
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content" 
+                android:id="@+id/shelf1"
+                layout="@layout/shelf"/>
+            <include
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content" 
+                android:id="@+id/shelf2"
+                layout="@layout/shelf"/>
+            <include
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content" 
+                android:id="@+id/shelf3"
+                layout="@layout/shelf"/>
+        </LinearLayout>
+    </ScrollView>
+
+    <include
+        android:id="@+id/menu_in_main_top"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        layout="@layout/menu" />
+   
+
+</LinearLayout>
