@@ -5,7 +5,6 @@ import java.io.File;
 import java.io.PrintWriter;
 import java.net.Socket;
 
-import sub.two.WebviewBrowser.Main;
 import sub.two.searchlocalfile.MyFile;
 
 import android.app.Activity;
@@ -46,21 +45,8 @@ public class EBookShelfActivity extends Activity {
         super.onCreate(savedInstanceState);       
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.main);  
-        ImageView moreImageView=(ImageView)findViewById(R.id.more);
-       
-        moreImageView.setOnClickListener(new OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-				// TODO Auto-generated method stub
-				System.out.println(123);
-				Intent webviewIntent =new Intent();
-				webviewIntent.setClass(EBookShelfActivity.this, Main.class);
-				startActivity(webviewIntent);
-				//showView.loadUrl("http://www.baidu.com");
-				//showView.loadUrl("http://192.168.151.50:8080/EBookShelf/");
-			}
-		});
+        
+    
         //初始化一些参数
         init();
      

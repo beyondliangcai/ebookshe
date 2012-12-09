@@ -1,5 +1,6 @@
 package sub.two.Activity;
 
+import sub.two.WebviewBrowser.Main;
 import sub.two.searchlocalfile.MyFile;
 import android.R.raw;
 import android.content.Context;
@@ -87,6 +88,9 @@ public class Listener {
 		@Override
 		public void onClick(View v) {
 			// TODO Auto-generated method stub
+			Intent webviewIntent=new Intent();
+			webviewIntent.setClass(context, Main.class);
+			context.startActivity(webviewIntent);
 			Log.v("book", "book store");
 		}
 	};
