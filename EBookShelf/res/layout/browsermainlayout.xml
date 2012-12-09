@@ -46,8 +46,8 @@
 	android:layout_x="4px"
 	android:layout_y="310px">
 	<LinearLayout
-		android:layout_width="307px"
-		android:layout_height="47px">
+		android:layout_width="fill_parent"
+		android:layout_height="fill_parent">
 		<ImageButton
 			android:id="@+id/back_btn"
 			android:layout_width="wrap_content"

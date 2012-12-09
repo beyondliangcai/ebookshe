@@ -1,5 +1,12 @@
 package sub.two.WebviewBrowser;
 
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.RandomAccessFile;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -13,6 +20,7 @@ import sub.two.WebviewBrowser.HttpData;
 import sub.two.WebviewBrowser.SQLiteHelper;
 import sub.two.WebviewBrowser.WriteFavoriteXml;
 
+import android.R.integer;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -74,7 +82,7 @@ public class Main extends Activity
 	private final static int PREFERENCE_ITEM = 5;		//帮助网页
 	private final static int EXIT_ITEM = 7;		//退出
 	
-	private String cur_url = "http://www.csdn.net/";
+	private String cur_url = "http://192.168.243.51:8080/EBookShelf/";
 	private final String ACTION_ADD_SHORTCUT = "com.android.launcher.action.INSTALL_SHORTCUT";
 	List<Map<String, Object>> history_data = new ArrayList<Map<String, Object>>();
 	List<HistoryBean> xml_data = new ArrayList<HistoryBean>();	
@@ -173,6 +181,39 @@ public class Main extends Activity
         	public boolean shouldOverrideUrlLoading(WebView  view, String url) {     
         		mWebView.loadUrl(url);  
         		cur_url = url;
+        		int filesize;
+        		try {
+        			InputStream inStream=null;
+					URL path=new URL(url);
+					HttpURLConnection connection=(HttpURLConnection) path.openConnection();
+				filesize=connection.getContentLength();
+				
+				 inStream=connection.getInputStream();
+				if (inStream==null) {
+					
+				}
+				else {
+					connection.disconnect();
+					File localFile=new File("/sdcard/Ebookdir/test.txt");
+					RandomAccessFile file=new RandomAccessFile(localFile, "rw");
+					file.setLength(filesize);
+					int hasread=0;
+					byte[] buffer=new byte[1024];
+					while ((hasread=inStream.read(buffer))!=-1) {
+						file.write(buffer,0,hasread);
+					}
+					inStream.close();
+				}
+				
+					
+				} catch (MalformedURLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+        		
         		setTitle();
         		//insertTable(url,1,mWebView.getTitle());
         		return true;     
@@ -414,7 +455,7 @@ public class Main extends Activity
 			return;
 		}
 				
-		Toast.makeText(Main.this, tip+"了记录", Toast.LENGTH_LONG).show();
+		
 	}
 	/* 删除过时的历史记录 */
 	private void deleteTable() 
