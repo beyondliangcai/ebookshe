@@ -27,6 +27,26 @@
             
         </activity>
         <activity
+              android:name="sub.two.WebviewBrowser.Main"           
+            >
+            
+        </activity>
+          <activity
+              android:name="sub.two.WebviewBrowser.HelpTabAct"           
+            >
+            
+        </activity>
+         <activity
+              android:name="sub.two.WebviewBrowser.HttpData"           
+            >
+            
+        </activity>
+        <activity
+              android:name="sub.two.WebviewBrowser.WebPreference"           
+            >
+            
+        </activity>
+        <activity
               android:name="sub.two.searchlocalfile.MyFile"           
             >
             
