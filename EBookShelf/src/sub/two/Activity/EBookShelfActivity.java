@@ -5,7 +5,6 @@ import java.io.File;
 import java.io.PrintWriter;
 import java.net.Socket;
 
-import sub.two.WebviewBrowser.Main;
 import sub.two.searchlocalfile.MyFile;
 
 import android.app.Activity;
@@ -53,7 +52,7 @@ public class EBookShelfActivity extends Activity {
 				// TODO Auto-generated method stub
 				System.out.println(123);
 				Intent webviewIntent =new Intent();
-				webviewIntent.setClass(EBookShelfActivity.this, Main.class);
+				webviewIntent.setClass(EBookShelfActivity.this, showweb.class);
 				startActivity(webviewIntent);
 				//showView.loadUrl("http://www.baidu.com");
 				//showView.loadUrl("http://192.168.151.50:8080/EBookShelf/");
@@ -87,6 +86,10 @@ public class EBookShelfActivity extends Activity {
         //收索本地书籍并添加本地书籍的实现
         ImageView searchlocalImageView =(ImageView)findViewById(R.id.search); 
         searchlocalImageView.setOnClickListener(listener.search);
+        
+        //连接服务器（书城）
+        ImageView book_store=(ImageView)findViewById(R.id.more);
+        book_store.setOnClickListener(listener.book_store);
     }
  
    
