@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="horizontal" >
+    
+    <sub.two.PersonalView.PView 
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/IV1"
+            android:layout_weight="1"            
+            android:paddingBottom="6dp"
+            android:src="@drawable/b1"
+            android:visibility="visible"
+            android:layout_gravity="bottom"
+            android:onClick="click_event"
+            />
+        <sub.two.PersonalView.PView 
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/IV2"
+            android:layout_weight="1"            
+            android:paddingLeft="5dp"
+            android:paddingBottom="6dp"
+            android:src="@drawable/b1"
+            android:visibility="visible"
+            android:layout_gravity="bottom"
+            android:onClick="click_event"
+            />
+        <sub.two.PersonalView.PView 
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/IV3"
+            android:layout_weight="1"            
+            android:paddingLeft="5dp"
+            android:paddingBottom="6dp"
+            android:src="@drawable/b1"
+            android:visibility="visible"
+            android:layout_gravity="bottom"
+            android:onClick="click_event"
+            />
+</LinearLayout>
