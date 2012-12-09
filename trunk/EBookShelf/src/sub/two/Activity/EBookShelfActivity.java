@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.PrintWriter;
 import java.net.Socket;
 
+import sub.two.WebviewBrowser.Main;
 import sub.two.searchlocalfile.MyFile;
 
 import android.app.Activity;
@@ -54,7 +55,7 @@ public class EBookShelfActivity extends Activity {
 				// TODO Auto-generated method stub
 				System.out.println(123);
 				Intent webviewIntent =new Intent();
-				webviewIntent.setClass(EBookShelfActivity.this, showweb.class);
+				webviewIntent.setClass(EBookShelfActivity.this, Main.class);
 				startActivity(webviewIntent);
 				//showView.loadUrl("http://www.baidu.com");
 				//showView.loadUrl("http://192.168.151.50:8080/EBookShelf/");
