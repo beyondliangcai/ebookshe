@@ -26,7 +26,7 @@ public class WelcomActivity extends Activity {             //Ïë×öÒ»¸ö¿ª»úµÄÆô¶¯»
         new Thread() {
                 public void run() {
                         try {
-                                Thread.sleep(1000);
+                                Thread.sleep(100);
                         } catch (InterruptedException e) {
                                 e.printStackTrace();
                         }

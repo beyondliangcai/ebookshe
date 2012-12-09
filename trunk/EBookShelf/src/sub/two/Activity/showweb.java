@@ -15,10 +15,6 @@ public class showweb extends Activity {
 				WebView showView=(WebView) findViewById(R.id.showview);
 				//showView.loadUrl("http://www.baidu.com/");
 				showView.loadUrl("http://192.168.151.50:8080/EBookShelf/");
-			
-
-		
-
 	}
 	
 

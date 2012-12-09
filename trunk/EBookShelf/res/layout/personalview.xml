@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<sub.two.PersonalView.PView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="fill_parent" >
+    <ImageView 
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/b1"
+        android:id="@+id/iv_in_personalview"
+        />
+    <TextView
+        android:text="书名"
+        android:id="@+id/tv_in_personalview"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="14dp"
+        android:paddingLeft="9dp"
+        android:textColor="#000000"
+        android:textSize="15dp"/>"
+
+</sub.two.PersonalView.PView>
