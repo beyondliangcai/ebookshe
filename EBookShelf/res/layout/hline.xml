@@ -24,13 +24,13 @@
          android:layout_marginBottom="6dp"
          android:layout_marginLeft="5dp"
          layout="@layout/personalview"/>
-    <include
+        <include 
          android:layout_width="0dp"
          android:layout_height="wrap_content"
          android:id="@+id/IV3"
-         android:layout_weight="1"     
+         android:layout_weight="1"            
          android:layout_gravity="bottom"
          android:layout_marginBottom="6dp"
          android:layout_marginLeft="5dp"
-         layout="@layout/personalview" />
+         layout="@layout/personalview"/>
 </LinearLayout>

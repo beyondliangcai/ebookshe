@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 import sub.two.Activity.EBookShelfActivity;
 import sub.two.Activity.R;
+import sub.two.Activity.login;
 import sub.two.Service.SearchLocalFile;
 import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
@@ -21,6 +22,9 @@ import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.Handler;
+import android.os.Message;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -54,6 +58,7 @@ public class MyFile extends ListActivity  implements OnItemLongClickListener {
   private RadioButton rb_file;
   private RadioButton rb_dir;
   private ImageButton rb_qry;
+  private int add_book=-9;
   private int [] flag=new int[100];
   protected final static int MENU_ADD =    Menu.FIRST;           //新建文件/文件夹
   protected final static int MENU_SET =    Menu.FIRST + 1;       //设置
@@ -991,12 +996,13 @@ public class MyFile extends ListActivity  implements OnItemLongClickListener {
 		intenttoEbookshell.setClass(MyFile.this, EBookShelfActivity.class);
 		addfileBuilder.setPositiveButton("确定", new OnClickListener() {
 		final	Builder errorBuilder=new AlertDialog.Builder(MyFile.this);
-		
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
 				// TODO 添加本地书籍
+
 				try {
-					//SearchLocalFile.count=0;					
+					//SearchLocalFile.count=0;	
+					
 					Intent intent1=new Intent();
 					intent1.setClass(MyFile.this, SearchLocalFile.class);
 					startService(intent1);
@@ -1011,8 +1017,7 @@ public class MyFile extends ListActivity  implements OnItemLongClickListener {
 						@Override
 						public void onClick(DialogInterface dialog, int which) {
 							// TODO Auto-generated method stub			
-																				
-							
+
 							startActivity(intenttoEbookshell);
 						}
 					});
