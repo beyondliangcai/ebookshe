@@ -1,8 +1,10 @@
 package sub.two.Activity;
 
+import sub.two.PersonalView.PView;
 import sub.two.WebviewBrowser.Main;
 import sub.two.searchlocalfile.MyFile;
 import android.R.raw;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
@@ -11,52 +13,29 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 public class Listener {
 	private Context context;
 	private View view_coll[];
 	private int NOT_FOUND=-1;
+	private EBookShelfActivity EA=new EBookShelfActivity();
 	//Construct
-	public  Listener(Context context) {
+	public  Listener(Context context,ScrollView s) {
 		this.context=context;
-		init();
+		//init(s);
 	}
 	
-	public void init(){
-		//import layout 
-		LayoutInflater inflater = LayoutInflater.from(context);
-		View shelfview=inflater.inflate(R.layout.shelf, null);
-		Log.v("book", "1");
-		// the shelf in main
-		View view1=shelfview.findViewById(R.id.shelf1);       //****************为什么词句话的view为空
-		//Log.v("book", "1 "+view1.getId());
-		//LayoutInflater.from(context).inflate(view1.getId(), null);
-		//TextView tv1=(TextView)view1.findViewById(R.id.tv_in_shelf);
-		/*LinearLayout view2=(LinearLayout)shelfview.findViewById(R.id.shelf2);
-		LinearLayout view3=(LinearLayout)shelfview.findViewById(R.id.shelf3);
-		Log.v("book", "12");
-		//the textview in each shelf
-		
-		TextView tv2=(TextView)view2.findViewById(R.id.tv_in_shelf);
-		TextView tv3=(TextView)view3.findViewById(R.id.tv_in_shelf);
-		Log.v("book", "name");
-		tv1.setText("最近阅读：");
-		tv2.setText("魔幻：");
-		tv3.setText("武侠：");
-		Log.v("book", "123");
-		// find the hline in each shelf
-		//View hlineView=inflater.inflate(R.layout.hline, null);
-        //
-		View v1=view1.findViewById(R.id.orgin_hline);
-		View v2=view2.findViewById(R.id.orgin_hline);
-		View v3=view3.findViewById(R.id.orgin_hline);
-		Log.v("book", "1234");
-		view_coll=new View[]{
-				v1.findViewById(R.id.IV1),v1.findViewById(R.id.IV2),v1.findViewById(R.id.IV3),
-				v2.findViewById(R.id.IV1),v2.findViewById(R.id.IV2),v2.findViewById(R.id.IV3),
-				v3.findViewById(R.id.IV1),v3.findViewById(R.id.IV2),v3.findViewById(R.id.IV3)};*/
-		}
+	/*public void init(ScrollView sv){
+		View shelf=sv.findViewById(R.id.shelf1);
+		View hr=shelf.findViewById(R.id.orgin_hline);
+		PView view=(PView)hr.findViewById(R.id.IV1);
+		view.setVisibility(View.INVISIBLE);
+		if(view!=null)
+			Log.v("book", "find it");
+		view.setTitle("av");
+	}*/
 	
 	//login listener
     OnClickListener  LogClickListener=new OnClickListener() {

@@ -1,12 +1,9 @@
 package sub.two.Service;
 
-import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.io.RandomAccessFile;
-import java.net.Socket;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -14,15 +11,18 @@ import sub.two.searchlocalfile.MyFile;
 
 import android.app.Service;
 import android.content.Intent;
-import android.os.Environment;
 import android.os.IBinder;
+import android.util.Log;
 
 public class SearchLocalFile extends Service{
-
+	
 	public static ArrayList name=new ArrayList<String>();
 	public static ArrayList localfile=new ArrayList<String>();
+	
+	public static final String File_Name="filename";
+	public static final String File_Path="filepath";
 	public static ArrayList<String> filenameArrayList=new ArrayList<String>();
-	public static ArrayList<String> filepathArrayList=new ArrayList<String>();
+	private ArrayList<String> filepathArrayList=new ArrayList<String>();
 	//public static int count=0;             本打算计算添加了几本书籍的，但貌似启动service的时候有延迟总是少一次....
 	public RandomAccessFile locallog;
 	private void getFileName(File[] files) {       //收索sd卡上所有.txt的文件
@@ -67,10 +67,9 @@ public class SearchLocalFile extends Service{
 	@Override
 	public void onStart(Intent intent, int startId) {
 		// TODO Auto-generated method stub
-		super.onStart(intent, startId);
-		
-		 //File path = Environment.getExternalStorageDirectory();// 获得SD卡路径  
-         //  File path = new File("/mnt/sdcard/");  
+		super.onStart(intent, startId);		
+		//File path = Environment.getExternalStorageDirectory();// 获得SD卡路径  
+        //  File path = new File("/mnt/sdcard/");  
 		File path=new File(MyFile.addpath);
 		
 		if (!path.isDirectory()&&path.getName().endsWith(".txt")) {
@@ -113,6 +112,14 @@ public class SearchLocalFile extends Service{
 				e.printStackTrace();
 			}
 		}
+		
+		Intent add_book=new Intent("sub.two.intent.addbook");
+		//intent.setAction(intent_for_addbook);
+		Log.d("book", filenameArrayList.toString());
+		intent.putStringArrayListExtra(File_Name, filenameArrayList);
+		intent.putStringArrayListExtra(File_Path, filepathArrayList);
+		sendBroadcast(add_book);
+		Log.v("book", "brocast send out!");
 	}
 
 	@Override

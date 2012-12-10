@@ -4,22 +4,15 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.PrintWriter;
 import java.net.Socket;
-
-import sub.two.searchlocalfile.MyFile;
-
 import android.app.Activity;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Environment;
-import android.util.Log;
-import android.view.View;
+import android.os.Handler;
 import android.view.Window;
-import android.view.View.OnClickListener;
-import android.webkit.WebView;
-import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.ScrollView;
 
 
@@ -28,16 +21,16 @@ public class EBookShelfActivity extends Activity {
 	public  Socket socket = null;
 	public	BufferedReader bufr = null;
 	public	PrintWriter pw = null;
-	//ScrollView里面的行数,根据它来创建相应的链表
-	private int columNUM;
-	private Context context;
-	private ScrollView SV;
 	
 	public	String result = null;
 	public File[] currentfiles;
 	public File Ebookdir;
 	
-	
+	public ScrollView sv;
+	Handler handler;
+	ManageBook manager;
+	 
+	addbook ass=new addbook();
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -45,11 +38,10 @@ public class EBookShelfActivity extends Activity {
         super.onCreate(savedInstanceState);       
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.main);  
-        
-    
+        sv=(ScrollView)findViewById(R.id.scrollview_in_fr);
         //初始化一些参数
         init();
-     
+
         if (Environment.getExternalStorageDirectory().equals(Environment.MEDIA_MOUNTED)) {
         	Ebookdir=new File("/sdcard/Ebookdir");
         	if (!Ebookdir.exists()) {
@@ -64,10 +56,9 @@ public class EBookShelfActivity extends Activity {
         	}
     }//onCreat 
     private void init(){
-    	SV=(ScrollView)findViewById(R.id.scrollview_in_fr);
-    	context=SV.getContext();
+    	manager=new ManageBook(sv);
     	//listener
-    	Listener listener=new Listener(this);
+    	Listener listener=new Listener(this,sv);
         //登录事件  
         ImageView LoginImageView=(ImageView)findViewById(R.id.login);
         LoginImageView.setOnClickListener(listener.LogClickListener);
@@ -79,7 +70,17 @@ public class EBookShelfActivity extends Activity {
         //连接服务器（书城）
         ImageView book_store=(ImageView)findViewById(R.id.more);
         book_store.setOnClickListener(listener.book_store);
+        
     }
- 
+    class addbook extends BroadcastReceiver{
+    	Bundle mybundle=new Bundle();
+		@Override
+		public void onReceive(Context context, Intent intent) {
+			// TODO Auto-generated method stub
+			
+
+		}
+    	
+    }
    
 }

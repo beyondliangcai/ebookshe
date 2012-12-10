@@ -1,7 +1,10 @@
 package sub.two.PersonalView;
 
+import sub.two.Activity.login;
 import android.R.string;
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.net.Uri;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.widget.FrameLayout;
@@ -9,36 +12,53 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.View.OnLongClickListener;
 
-public class PView extends FrameLayout implements OnClickListener{
+public class PView extends FrameLayout implements OnClickListener , OnLongClickListener{
 
-	string title=null;
-    string auther=null;
-	string intro=null;
-	int resid=-1;
-	int id=-1;
-	ImageView iv;
-	TextView tv;
+	private String title="书名";
+	private String path =null;
+	private String auther="佚名";
+	private String intro="暂无";
+	private Bitmap pic=null;
+	protected int id=-1;
+	private int rc[]=new int[]{-1,-1};
+	private ImageView iv;
+	private TextView tv;
+	private Boolean occupy=false;
+	private int new_pview=-2;
+	
 	public PView(Context context, AttributeSet attrs) {
 		super(context, attrs);
 		// TODO Auto-generated constructor stub
 	}
+	
 	@Override
 	protected void onFinishInflate(){
 		iv=(ImageView)findViewById(sub.two.Activity.R.id.iv_in_personalview);
 		tv=(TextView)findViewById(sub.two.Activity.R.id.tv_in_personalview);
 		iv.setOnClickListener(this);
+		iv.setOnLongClickListener(this);
 		tv.setClickable(false);
+		//Log.v("book", "inflate finish");
 	}
 	@Override
 	public void onClick(View v) {
 		// TODO Auto-generated method stub
 		View view=(View)v.getParent();
-		if (view!=null) {
-			int rc[]=new int[]{-1,-1};
-			rc=RC(v);
+		rc=RC(v);
+		if (view!=null){
 			Log.v("book", rc[0]+","+rc[1]);
-		}
+			//Log.e("book", "occupy:"+occupy);
+			Log.d("book", title.toString());
+			}
+	}
+	
+	@Override
+	public boolean onLongClick(View v) {
+		// TODO Auto-generated method stub
+		Log.d("book", "long click");
+		return false;
 	}
 	//判断书籍所在行列
 	public int[] RC(View v){
@@ -56,8 +76,6 @@ public class PView extends FrameLayout implements OnClickListener{
 			return 1;
 		case sub.two.Activity.R.id.shelf2:
 			return 2;
-		case sub.two.Activity.R.id.shelf3:
-			return 3;
 		default:
 			return -1;
 		}
@@ -74,5 +92,33 @@ public class PView extends FrameLayout implements OnClickListener{
 		default:
 			return -1;
 		}
+	}
+	
+	public void setoccupy(Boolean b) {
+		occupy=b;
+	}
+	
+	public void setBitMap(Bitmap pic) {
+		iv.setImageBitmap(pic);
+	}
+	
+	public void setTitle(String f) {
+		tv.setText(f);
+	}
+	
+	public void setpath(String pa) {
+		path=pa;
+	}
+	
+	public void setAuther(String a){
+		auther=a;
+	}
+	
+	public void setIntro(String s){
+		intro=s;
+	}
+	
+	public Boolean getoccupy(){
+		return occupy;
 	}
 }
