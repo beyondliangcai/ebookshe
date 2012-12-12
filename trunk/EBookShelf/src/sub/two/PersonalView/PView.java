@@ -47,11 +47,12 @@ public class PView extends FrameLayout implements OnClickListener , OnLongClickL
 		// TODO Auto-generated method stub
 		View view=(View)v.getParent();
 		rc=RC(v);
-		if (view!=null){
-			Log.v("book", rc[0]+","+rc[1]);
-			//Log.e("book", "occupy:"+occupy);
-			Log.d("book", title.toString());
-			}
+//		if (view!=null){
+//			Log.v("book", rc[0]+","+rc[1]);
+//			Log.e("book", "occupy:"+occupy);
+//			Log.d("book", title.toString());
+//			}
+		
 	}
 	
 	@Override
@@ -94,31 +95,38 @@ public class PView extends FrameLayout implements OnClickListener , OnLongClickL
 		}
 	}
 	
-	public void setoccupy(Boolean b) {
+	public void set_occupy(Boolean b) {
 		occupy=b;
 	}
 	
-	public void setBitMap(Bitmap pic) {
+	public void set_BitMap(Bitmap pic) {
 		iv.setImageBitmap(pic);
 	}
 	
-	public void setTitle(String f) {
-		tv.setText(f);
+	public void set_Title(String f) {
+		title=f;
+		tv.setText(title);
+		tv.invalidate();
+		//Log.v("book", "refresh");
 	}
 	
-	public void setpath(String pa) {
+	public void set_path(String pa) {
 		path=pa;
 	}
 	
-	public void setAuther(String a){
+	public void set_Auther(String a){
 		auther=a;
 	}
 	
-	public void setIntro(String s){
+	public void set_Intro(String s){
 		intro=s;
 	}
 	
-	public Boolean getoccupy(){
+	public Boolean get_occupy(){
 		return occupy;
+	}
+	
+	public String get_Title(){
+		return title;
 	}
 }

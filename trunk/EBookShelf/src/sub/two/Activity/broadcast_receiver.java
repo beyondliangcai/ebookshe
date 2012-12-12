@@ -14,15 +14,15 @@ public class broadcast_receiver extends BroadcastReceiver{
 	@Override
 	public void onReceive(Context context, Intent intent) {
 		// TODO Auto-generated method stub
-		Log.d("book", "A intent just been received");
 		if (intent.getAction().equals(intent_for_addbook)) {
 			Log.d("book", "add book intent is been received");
-			Log.e("book", SearchLocalFile.filenameArrayList.toString());
+			
 			if (intent.getStringArrayListExtra(SearchLocalFile.File_Name)==null)
 				Log.v("book", "null string");
-			else 
-				Log.v("book", intent.getStringArrayListExtra(SearchLocalFile.File_Name).toString());
-			//eA.manager.addbook(myBundle.getStringArrayList("filename"), myBundle.getStringArrayList("filepath"));
+			else{ 
+				//Log.v("book", intent.getStringArrayListExtra(SearchLocalFile.File_Name).toString());
+				//EBookShelfActivity.addbook(intent.getStringArrayListExtra("filename"), intent.getStringArrayListExtra("filepath"),ManageBook.pview_vec);
+			}
 		}
 	}
 
