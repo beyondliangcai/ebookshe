@@ -7,21 +7,25 @@ import java.io.RandomAccessFile;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import sub.two.Activity.EBookShelfActivity;
 import sub.two.searchlocalfile.MyFile;
 
 import android.app.Service;
 import android.content.Intent;
+import android.os.Bundle;
 import android.os.IBinder;
+import android.os.Message;
 import android.util.Log;
 
 public class SearchLocalFile extends Service{
 	
 	public static ArrayList name=new ArrayList<String>();
 	public static ArrayList localfile=new ArrayList<String>();
+	public static int add_book= -8;
 	
 	public static final String File_Name="filename";
 	public static final String File_Path="filepath";
-	public static ArrayList<String> filenameArrayList=new ArrayList<String>();
+	private ArrayList<String> filenameArrayList=new ArrayList<String>();
 	private ArrayList<String> filepathArrayList=new ArrayList<String>();
 	//public static int count=0;             本打算计算添加了几本书籍的，但貌似启动service的时候有延迟总是少一次....
 	public RandomAccessFile locallog;
@@ -113,13 +117,10 @@ public class SearchLocalFile extends Service{
 			}
 		}
 		
-		Intent add_book=new Intent("sub.two.intent.addbook");
-		//intent.setAction(intent_for_addbook);
-		Log.d("book", filenameArrayList.toString());
-		intent.putStringArrayListExtra(File_Name, filenameArrayList);
-		intent.putStringArrayListExtra(File_Path, filepathArrayList);
-		sendBroadcast(add_book);
-		Log.v("book", "brocast send out!");
+		Bundle bundle=new Bundle();
+		bundle.putStringArrayList(File_Name, filenameArrayList);
+		bundle.putStringArrayList(File_Path, filepathArrayList);
+		Message.obtain(EBookShelfActivity.handler,add_book,bundle).sendToTarget();
 	}
 
 	@Override
