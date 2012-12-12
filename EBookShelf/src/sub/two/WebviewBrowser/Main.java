@@ -1,5 +1,7 @@
 package sub.two.WebviewBrowser;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -7,6 +9,7 @@ import java.io.RandomAccessFile;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.nio.Buffer;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -82,7 +85,8 @@ public class Main extends Activity
 	private final static int PREFERENCE_ITEM = 5;		//°ïÖúÍøÒ³
 	private final static int EXIT_ITEM = 7;		//ÍË³ö
 	
-	private String cur_url = "http://192.168.243.51:8080/EBookShelf/";
+	//private String cur_url = "http://192.168.41.50:8080/EBookShelf/";
+   private String cur_url = "http://www.baidu.com/";
 	private final String ACTION_ADD_SHORTCUT = "com.android.launcher.action.INSTALL_SHORTCUT";
 	List<Map<String, Object>> history_data = new ArrayList<Map<String, Object>>();
 	List<HistoryBean> xml_data = new ArrayList<HistoryBean>();	
@@ -179,31 +183,40 @@ public class Main extends Activity
         
         mWebView.setWebViewClient(new WebViewClient(){     
         	public boolean shouldOverrideUrlLoading(WebView  view, String url) {     
-        		mWebView.loadUrl(url);  
+        		
         		cur_url = url;
         		int filesize;
         		try {
         			InputStream inStream=null;
 					URL path=new URL(url);
-					HttpURLConnection connection=(HttpURLConnection) path.openConnection();
-				filesize=connection.getContentLength();
-				
-				 inStream=connection.getInputStream();
-				if (inStream==null) {
 					
-				}
-				else {
-					connection.disconnect();
-					File localFile=new File("/sdcard/Ebookdir/test.txt");
-					RandomAccessFile file=new RandomAccessFile(localFile, "rw");
-					file.setLength(filesize);
-					int hasread=0;
-					byte[] buffer=new byte[1024];
-					while ((hasread=inStream.read(buffer))!=-1) {
-						file.write(buffer,0,hasread);
+					
+					HttpURLConnection connection=(HttpURLConnection) path.openConnection();
+					connection.setDoInput(true);
+					
+					if (connection.getContentType().equals("application/x-msdownload")) {
+						System.out.println(123);
+						filesize=connection.getContentLength();					
+						 inStream=connection.getInputStream();	
+						 byte[] buffer=new byte[1024];
+						BufferedInputStream bufferedInputStream=new BufferedInputStream(inStream);
+						bufferedInputStream.read(buffer);
+						
+						 System.out.println( new String (buffer));
+						File localFile=new File("/mnt/sdcard/Ebookdir/test.txt");
+							RandomAccessFile file=new RandomAccessFile(localFile, "rw");							
+							int hasread=0;							
+							while ((hasread=inStream.read(buffer))!=-1) {
+								file.write(buffer,0,hasread);
+							}
+							inStream.close();
+						
 					}
-					inStream.close();
-				}
+					else {
+						mWebView.loadUrl(url);  
+					}
+				
+					
 				
 					
 				} catch (MalformedURLException e) {
@@ -264,7 +277,7 @@ public class Main extends Activity
     	super.onCreateOptionsMenu(menu);
     	menu.add(0, HISTORY_ITEM, HISTORY_ITEM, R.string.history).setIcon(R.drawable.history); //setIcon,setText
     	menu.add(0, HTTP_ITEM, HTTP_ITEM, R.string.http_name).setIcon(R.drawable.about);
-    	menu.add(0, SHORTCUT_ITEM, SHORTCUT_ITEM, R.string.shortcut).setIcon(R.drawable.icon);
+    	
     	menu.add(0, ADD_FAVORITE, ADD_FAVORITE, R.string.addFavorite).setIcon(R.drawable.add_favorite);
     	menu.add(0, FAVORITE_ITEM, FAVORITE_ITEM, R.string.favorite).setIcon(R.drawable.favorite);
     	menu.add(1, PREFERENCE_ITEM, PREFERENCE_ITEM, R.string.preference).setIcon(R.drawable.help);
@@ -280,9 +293,7 @@ public class Main extends Activity
     		case HTTP_ITEM:
     			showDialog(HTTP_ITEM);
     			break;
-    		case SHORTCUT_ITEM:
-    			createShortcut();
-    			break;
+    		
     		case ADD_FAVORITE:
     			add_favorite();
     			break;
@@ -491,26 +502,7 @@ public class Main extends Activity
 		myCursor_one.close();  	
 	}
 	
-	private void createShortcut()
-	{
-		Intent addShortcut = new Intent(ACTION_ADD_SHORTCUT);  
-    	String numToDial = null;  
-    	Parcelable icon = null;  
-    	
-    	numToDial = "MyBrowser";  
-		icon = Intent.ShortcutIconResource.fromContext(  
-				this,R.drawable.icon);  
-		
-		addShortcut.putExtra(Intent.EXTRA_SHORTCUT_NAME,  numToDial);   
-		
-		directCall.addCategory(Intent.CATEGORY_LAUNCHER);        
-		directCall.setComponent(new ComponentName(this.getPackageName(),     
-				this.getPackageName()+".Main")); 		
-		
-    	addShortcut.putExtra(Intent.EXTRA_SHORTCUT_INTENT,  directCall);  
-    	addShortcut.putExtra(Intent.EXTRA_SHORTCUT_ICON_RESOURCE, icon);  
-    	sendBroadcast(addShortcut); 
-	}
+	
 	
 	private void add_favorite()
 	{
@@ -615,7 +607,7 @@ public class Main extends Activity
     protected void dialog() 
     {  
         AlertDialog.Builder builder = new Builder(Main.this);  
-        builder.setIcon(R.drawable.icon);
+        builder.setIcon(R.drawable.exit);
         builder.setTitle(R.string.exit_title);
         builder.setMessage(R.string.exit_message);
         builder.setPositiveButton(R.string.ok_btn,  
