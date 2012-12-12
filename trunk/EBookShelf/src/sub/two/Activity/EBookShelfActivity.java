@@ -23,6 +23,7 @@ import android.view.View;
 import android.view.Window;
 import android.widget.ImageView;
 import android.widget.ScrollView;
+import android.widget.TextView;
 
 
 public class EBookShelfActivity extends Activity {
@@ -36,9 +37,10 @@ public class EBookShelfActivity extends Activity {
 	public File Ebookdir;
 	
 	public ScrollView sv;
-	private View shelf,shelf2,hr1,hr2;
+	private View shelf,shelf2,shelf3,hr1,hr2,hr3;
 	public static Handler handler;
 	private List<PView> pview_vec=new ArrayList<PView>();
+	private List<TextView> shelf_tv=new ArrayList<TextView>();
 	//private PView v1,v2,v3,v4,v5,v6;
 
     @Override
@@ -98,6 +100,8 @@ public class EBookShelfActivity extends Activity {
         sv=(ScrollView)findViewById(R.id.scrollview_in_fr);
 		shelf=sv.findViewById(R.id.shelf1);
 		hr1=shelf.findViewById(R.id.orgin_hline);
+		TextView tx1=(TextView)shelf.findViewById(R.id.tv_in_shelf);
+		shelf_tv.add(tx1);
 		PView v1=(PView)hr1.findViewById(R.id.IV1);
 		pview_vec.add(v1);
 		PView view2=(PView)hr1.findViewById(R.id.IV2);
@@ -106,6 +110,8 @@ public class EBookShelfActivity extends Activity {
 		pview_vec.add(view3);
 		//shelf2
 		shelf2=sv.findViewById(R.id.shelf2);
+		TextView tx2=(TextView)shelf2.findViewById(R.id.tv_in_shelf);
+		shelf_tv.add(tx2);
 		hr2=shelf2.findViewById(R.id.orgin_hline);
 		PView view4=(PView)hr2.findViewById(R.id.IV1);
 		pview_vec.add(view4);
@@ -113,19 +119,38 @@ public class EBookShelfActivity extends Activity {
 		pview_vec.add(view5);
 		PView view6=(PView)hr2.findViewById(R.id.IV3);
 		pview_vec.add(view6);
+		//shelf3
+		shelf3=sv.findViewById(R.id.shelf3);
+		TextView tx3=(TextView)shelf3.findViewById(R.id.tv_in_shelf);
+		shelf_tv.add(tx3);
+		hr3=shelf3.findViewById(R.id.orgin_hline);
+		PView view7=(PView)hr3.findViewById(R.id.IV1);
+		pview_vec.add(view7);
+		PView view8=(PView)hr3.findViewById(R.id.IV2);
+		pview_vec.add(view8);
+		PView view9=(PView)hr3.findViewById(R.id.IV3);
+		pview_vec.add(view9);
+		
 		for (int i = 0; i < pview_vec.size(); i++) {
 			pview_vec.get(i).setVisibility(View.INVISIBLE);
 			pview_vec.get(i).set_occupy(false);
+		}
+		
+		for (int j = 1; j <= shelf_tv.size(); j++) {
+			shelf_tv.get(j-1).setText("shelf"+j);
 		}
 	}
 	
 	public static void addbook(ArrayList<String> name,ArrayList<String> path,List<PView> vec){	
 		int ddq=(vec.size()>name.size())? name.size():vec.size();
 		for (int i = 0; i < ddq; i++) {
-			Log.v("book", "size:"+ddq);
+			//Log.v("book", "size:"+ddq);
 			if(!vec.get(i).get_occupy()){
 				vec.get(i).setVisibility(View.VISIBLE);
-				vec.get(i).set_Title(name.get(i));
+				String[] st=name.get(i).split("\\.");
+				if(st[0].length()>5)
+					st[0]=st[0].substring(0,5);
+				vec.get(i).set_Title(st[0]);
 				vec.get(i).set_occupy(true);
 				}
 		}
