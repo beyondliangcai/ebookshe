@@ -1,7 +1,5 @@
 package sub.two.PersonalView;
 
-import sub.two.Activity.login;
-import android.R.string;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.net.Uri;
@@ -47,11 +45,11 @@ public class PView extends FrameLayout implements OnClickListener , OnLongClickL
 		// TODO Auto-generated method stub
 		View view=(View)v.getParent();
 		rc=RC(v);
-//		if (view!=null){
-//			Log.v("book", rc[0]+","+rc[1]);
-//			Log.e("book", "occupy:"+occupy);
-//			Log.d("book", title.toString());
-//			}
+		if (view!=null){
+			Log.v("book", rc[0]+","+rc[1]);
+			//Log.e("book", "occupy:"+occupy);
+			//Log.d("book", title.toString());
+			}
 		
 	}
 	
@@ -61,6 +59,7 @@ public class PView extends FrameLayout implements OnClickListener , OnLongClickL
 		Log.d("book", "long click");
 		return false;
 	}
+	
 	//判断书籍所在行列
 	public int[] RC(View v){
 		int[] rac=new int[]{-1,-1};
@@ -70,6 +69,7 @@ public class PView extends FrameLayout implements OnClickListener , OnLongClickL
 		rac[1]=colunm(parent_id);
 		return rac;
 	}
+	
 	//书籍所在行 gp
 	public int row(int id) {
 		switch (id) {
@@ -77,10 +77,13 @@ public class PView extends FrameLayout implements OnClickListener , OnLongClickL
 			return 1;
 		case sub.two.Activity.R.id.shelf2:
 			return 2;
+		case sub.two.Activity.R.id.shelf3:
+			return 3;
 		default:
 			return -1;
 		}
 	}
+	
 	//书籍所在列 p
 	public int colunm(int id) {
 		switch (id) {
