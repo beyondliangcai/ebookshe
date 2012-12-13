@@ -33,7 +33,7 @@ public class MyDB extends SQLiteOpenHelper {
 		
 
 	}
-	public static void insertdata(SQLiteDatabase EbookDb ,int id,String title,String path,
+	public  void insertdata(SQLiteDatabase EbookDb ,int id,String title,String path,
 			String auther ,String intro,String pic) {
 		System.out.println("insert ....!");
 		EbookDb.execSQL("delete from BookDB ");

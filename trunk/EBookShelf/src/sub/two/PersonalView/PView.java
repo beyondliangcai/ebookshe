@@ -26,6 +26,7 @@ public class PView extends FrameLayout implements OnClickListener , OnLongClickL
 	private String intro;
 	private Bitmap pic;
 	private Boolean occupy=false;
+	private String pic_path;
 	private int id;
 	
 	private int rc[]=new int[]{-1,-1};
@@ -183,6 +184,9 @@ public class PView extends FrameLayout implements OnClickListener , OnLongClickL
 		id=i;
 	}
 	
+	public void set_pic_path(String qq){
+		pic_path=qq;
+	}
 	public void set_inner_Visibility(int visiable){
 		tv.setVisibility(visiable);
 		iv.setVisibility(visiable);
@@ -201,4 +205,23 @@ public class PView extends FrameLayout implements OnClickListener , OnLongClickL
 		return title;
 	}
 
+	public int get_id(){
+		return id;
+	}
+	
+	public String get_path(){
+		return path;
+	}
+	
+	public String get_intro(){
+		return intro;
+	}
+	
+	public String get_Auther(){
+		return auther;
+	}
+	
+	public String get_image_path(){
+		return pic_path;
+	}
 }

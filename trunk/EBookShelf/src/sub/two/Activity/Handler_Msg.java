@@ -3,6 +3,7 @@ package sub.two.Activity;
 import java.util.ArrayList;
 import java.util.List;
 
+import sub.two.DB.MyDB;
 import sub.two.PersonalView.PView;
 import sub.two.Service.SearchLocalFile;
 import android.os.Bundle;
@@ -14,7 +15,8 @@ import android.view.View;
 public class Handler_Msg extends Handler{
 	@Override
 	public void handleMessage(Message msg){
-		if(msg.what==SearchLocalFile.ADD_BOOK){
+		if(msg.what==SearchLocalFile.ADD_BOOK){		
+			//WelcomActivity.EbookdDb.insertdata( WelcomActivity.EbookdDb.getReadableDatabase(),i+1, filenameArrayList.get(i),filepathArrayList.get(i), null, null, null);	
 			Log.v("book", "handle add message!");
 			Bundle bundle=(Bundle)msg.obj;
         	addbook(bundle.getStringArrayList(SearchLocalFile.File_Name),
@@ -45,6 +47,9 @@ public class Handler_Msg extends Handler{
 					st[0]=st[0].substring(0,5);
 				vec.get(i).set_Title(st[0]);
 				vec.get(i).set_occupy(true);
+				WelcomActivity.EbookdDb.insertdata(WelcomActivity.EbookdDb.getReadableDatabase(),
+						vec.get(i).get_id(),vec.get(i).get_Title(),vec.get(i).get_path(),vec.get(i).get_Auther()
+						,vec.get(i).get_intro(),vec.get(i).get_image_path());
 				}
 		}
 	}
