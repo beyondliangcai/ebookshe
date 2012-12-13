@@ -38,10 +38,9 @@ public class EBookShelfActivity extends Activity {
 	
 	public ScrollView sv;
 	private View shelf,shelf2,shelf3,hr1,hr2,hr3;
-	public static Handler handler;
-	private List<PView> pview_vec=new ArrayList<PView>();
-	private List<TextView> shelf_tv=new ArrayList<TextView>();
-	//private PView v1,v2,v3,v4,v5,v6;
+	//public static Handler handler;
+	public static List<PView> pview_vec=new ArrayList<PView>();
+	public static List<TextView> shelf_tv=new ArrayList<TextView>();
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -54,16 +53,6 @@ public class EBookShelfActivity extends Activity {
         init();
         init_pview();
         
-        handler=new Handler(){
-        	@Override
-        	public void handleMessage(Message msg){
-        		if (msg.what==SearchLocalFile.add_book) {        			
-        			Bundle bundle=(Bundle)msg.obj;
-                	addbook(bundle.getStringArrayList(SearchLocalFile.File_Name),
-                			bundle.getStringArrayList(SearchLocalFile.File_Path), pview_vec);
-				}
-        	}
-        };
         if (Environment.getExternalStorageDirectory().equals(Environment.MEDIA_MOUNTED)) {
         	Ebookdir=new File("/sdcard/Ebookdir");
         	if (!Ebookdir.exists()) {
@@ -95,13 +84,16 @@ public class EBookShelfActivity extends Activity {
         
     }
     
-	public void init_pview(){
+	private void init_pview(){
         //默认控件初始化
         sv=(ScrollView)findViewById(R.id.scrollview_in_fr);
+        
 		shelf=sv.findViewById(R.id.shelf1);
 		hr1=shelf.findViewById(R.id.orgin_hline);
+		
 		TextView tx1=(TextView)shelf.findViewById(R.id.tv_in_shelf);
 		shelf_tv.add(tx1);
+		
 		PView v1=(PView)hr1.findViewById(R.id.IV1);
 		pview_vec.add(v1);
 		PView view2=(PView)hr1.findViewById(R.id.IV2);
@@ -119,6 +111,7 @@ public class EBookShelfActivity extends Activity {
 		pview_vec.add(view5);
 		PView view6=(PView)hr2.findViewById(R.id.IV3);
 		pview_vec.add(view6);
+		
 		//shelf3
 		shelf3=sv.findViewById(R.id.shelf3);
 		TextView tx3=(TextView)shelf3.findViewById(R.id.tv_in_shelf);
@@ -131,29 +124,13 @@ public class EBookShelfActivity extends Activity {
 		PView view9=(PView)hr3.findViewById(R.id.IV3);
 		pview_vec.add(view9);
 		
-		for (int i = 0; i < pview_vec.size(); i++) {
-			pview_vec.get(i).setVisibility(View.INVISIBLE);
-			pview_vec.get(i).set_occupy(false);
-		}
-		
 		for (int j = 1; j <= shelf_tv.size(); j++) {
 			shelf_tv.get(j-1).setText("shelf"+j);
 		}
+		for (int i = 0; i < pview_vec.size(); i++) {
+			pview_vec.get(i).set_id(i);
+		}
 	}
 	
-	public static void addbook(ArrayList<String> name,ArrayList<String> path,List<PView> vec){	
-		int ddq=(vec.size()>name.size())? name.size():vec.size();
-		for (int i = 0; i < ddq; i++) {
-			//Log.v("book", "size:"+ddq);
-			if(!vec.get(i).get_occupy()){
-				vec.get(i).setVisibility(View.VISIBLE);
-				String[] st=name.get(i).split("\\.");
-				if(st[0].length()>5)
-					st[0]=st[0].substring(0,5);
-				vec.get(i).set_Title(st[0]);
-				vec.get(i).set_occupy(true);
-				}
-		}
-		Log.d("book", "add book successfully! ");
-	}
+	
 }
