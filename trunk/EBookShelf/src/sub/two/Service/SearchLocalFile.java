@@ -8,10 +8,12 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import sub.two.Activity.EBookShelfActivity;
+import sub.two.DB.MyDB;
 import sub.two.searchlocalfile.MyFile;
 
 import android.app.Service;
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.os.Message;
@@ -22,7 +24,7 @@ public class SearchLocalFile extends Service{
 	public static ArrayList name=new ArrayList<String>();
 	public static ArrayList localfile=new ArrayList<String>();
 	public static int add_book= -8;
-	
+	public MyDB EbookdDb;
 	public static final String File_Name="filename";
 	public static final String File_Path="filepath";
 	private ArrayList<String> filenameArrayList=new ArrayList<String>();
@@ -116,6 +118,18 @@ public class SearchLocalFile extends Service{
 				e.printStackTrace();
 			}
 		}
+		//将用户添加的书籍插入到数据库中
+		String string="/a";
+		System.out.println(string);
+		EbookdDb =new MyDB(this, "EbookDb.db3", 1);
+	
+		for (int i = 0; i < filenameArrayList.size(); i++) {
+			
+		MyDB.insertdata( EbookdDb.getReadableDatabase(),i+1, filenameArrayList.get(i),filepathArrayList.get(i), null, null, null);
+		
+		}
+	
+		
 		
 		Bundle bundle=new Bundle();
 		bundle.putStringArrayList(File_Name, filenameArrayList);
@@ -128,4 +142,5 @@ public class SearchLocalFile extends Service{
 		// TODO Auto-generated method stub
 		return null;
 	}
+	
 }
