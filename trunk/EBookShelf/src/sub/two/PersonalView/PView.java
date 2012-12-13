@@ -87,7 +87,7 @@ public class PView extends FrameLayout implements OnClickListener , OnLongClickL
 			Log.v("book", "error");
 			break;
 		}
-		Message e=handler_Msg.obtainMessage(idd, id);
+		Message e=handler_Msg.obtainMessage(idd, id, 0);
 		handler_Msg.sendMessage(e);
 	}
 	

@@ -6,6 +6,7 @@ import sub.two.searchlocalfile.MyFile;
 import android.R.raw;
 import android.app.Activity;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -22,20 +23,9 @@ public class Listener {
 	private int NOT_FOUND=-1;
 	private EBookShelfActivity EA=new EBookShelfActivity();
 	//Construct
-	public  Listener(Context context,ScrollView s) {
+	public  Listener(Context context) {
 		this.context=context;
-		//init(s);
 	}
-	
-	/*public void init(ScrollView sv){
-		View shelf=sv.findViewById(R.id.shelf1);
-		View hr=shelf.findViewById(R.id.orgin_hline);
-		PView view=(PView)hr.findViewById(R.id.IV1);
-		view.setVisibility(View.INVISIBLE);
-		if(view!=null)
-			Log.v("book", "find it");
-		view.setTitle("av");
-	}*/
 	
 	//login listener
     OnClickListener  LogClickListener=new OnClickListener() {
@@ -73,62 +63,66 @@ public class Listener {
 			Log.v("book", "book store");
 		}
 	};
-	//主界面3栏的pview事件监听
-	OnClickListener pview_onClickListener=new OnClickListener() {
+	
+	DialogInterface.OnClickListener delete_confirm_yes =new DialogInterface.OnClickListener() {
 		
 		@Override
-		public void onClick(View v) {
+		public void onClick(DialogInterface dialog, int which) {
 			// TODO Auto-generated method stub
-			int i=compare(v);
-			if (i!=-1)
-				Log.v("book", "pview click on :"+((i/3)+1)+","+i%3);
 			
-			View view=LayoutInflater.from(context).inflate(R.layout.readanddetail, null);
-			ImageView im1=(ImageView)view.findViewById(R.id.read);
-			ImageView im2=(ImageView)view.findViewById(R.id.detail);
-			// read book
-			im1.setOnClickListener(new OnClickListener() {
-				
-				@Override
-				public void onClick(View v) {
-					// TODO Auto-generated method stub
-
-				}
-			});
-			//jump to detail page
-			im2.setOnClickListener(new OnClickListener() {
-				
-				@Override
-				public void onClick(View v) {
-					// TODO Auto-generated method stub
-					
-				}
-			});
 		}
-	};//here is the end of listener
+	};
 	
-	//if the given view is one of the 9 ,return its number
-	//else return not found;
-	public int compare(View v){
-		for(int i=0;i<9;i++){
-			if(view_coll[i]==v)
-				return i+1;
-		}
-		return NOT_FOUND;
-	}
-	
-    //imageview 事件处理
-    public void click_event(View target){
-    	LinearLayout parent=(LinearLayout)target.getParent();
-    	Log.v("book", "pview click"+",parent id is "+parent.getChildCount());
-    	switch (target.getId()) {
-		case R.id.IV1:
-		case R.id.IV2:
-		case R.id.IV3:
+	DialogInterface.OnClickListener delete_confirm_no =new DialogInterface.OnClickListener() {
+		
+		@Override
+		public void onClick(DialogInterface dialog, int which) {
+			// TODO Auto-generated method stub
 			
-			break;
-		default:Log.v("ebook", "wrong");
-			break;
 		}
-    }
+	};
+//	//主界面3栏的pview事件监听
+//	OnClickListener pview_onClickListener=new OnClickListener() {
+//		
+//		@Override
+//		public void onClick(View v) {
+//			// TODO Auto-generated method stub
+//			int i=compare(v);
+//			if (i!=-1)
+//				Log.v("book", "pview click on :"+((i/3)+1)+","+i%3);
+//			
+//			View view=LayoutInflater.from(context).inflate(R.layout.readanddetail, null);
+//			ImageView im1=(ImageView)view.findViewById(R.id.read);
+//			ImageView im2=(ImageView)view.findViewById(R.id.detail);
+//			// read book
+//			im1.setOnClickListener(new OnClickListener() {
+//				
+//				@Override
+//				public void onClick(View v) {
+//					// TODO Auto-generated method stub
+//
+//				}
+//			});
+//			//jump to detail page
+//			im2.setOnClickListener(new OnClickListener() {
+//				
+//				@Override
+//				public void onClick(View v) {
+//					// TODO Auto-generated method stub
+//					
+//				}
+//			});
+//		}
+//	};//here is the end of listener
+//	
+//	//if the given view is one of the 9 ,return its number
+//	//else return not found;
+//	public int compare(View v){
+//		for(int i=0;i<9;i++){
+//			if(view_coll[i]==v)
+//				return i+1;
+//		}
+//		return NOT_FOUND;
+//	}
+	
 }
