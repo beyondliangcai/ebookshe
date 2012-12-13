@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import sub.two.Activity.EBookShelfActivity;
+import sub.two.Activity.Handler_Msg;
 import sub.two.DB.MyDB;
 import sub.two.searchlocalfile.MyFile;
 
@@ -23,7 +24,7 @@ public class SearchLocalFile extends Service{
 	
 	public static ArrayList name=new ArrayList<String>();
 	public static ArrayList localfile=new ArrayList<String>();
-	public static int add_book= -8;
+	public static int ADD_BOOK= -8;
 	public MyDB EbookdDb;
 	public static final String File_Name="filename";
 	public static final String File_Path="filepath";
@@ -134,7 +135,10 @@ public class SearchLocalFile extends Service{
 		Bundle bundle=new Bundle();
 		bundle.putStringArrayList(File_Name, filenameArrayList);
 		bundle.putStringArrayList(File_Path, filepathArrayList);
-		Message.obtain(EBookShelfActivity.handler,add_book,bundle).sendToTarget();
+		Handler_Msg handler_Msg=new Handler_Msg();
+		Message add=handler_Msg.obtainMessage(ADD_BOOK, bundle);
+		handler_Msg.sendMessage(add);
+//		Log.v("book", "add book message");
 	}
 
 	@Override

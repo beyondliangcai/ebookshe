@@ -1,12 +1,18 @@
 package sub.two.PersonalView;
 
+import sub.two.Activity.Handler_Msg;
+import sub.two.Activity.R;
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.Canvas;
 import android.net.Uri;
+import android.os.Message;
+import android.text.StaticLayout;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -14,17 +20,26 @@ import android.view.View.OnLongClickListener;
 
 public class PView extends FrameLayout implements OnClickListener , OnLongClickListener{
 
-	private String title="书名";
-	private String path =null;
-	private String auther="佚名";
-	private String intro="暂无";
-	private Bitmap pic=null;
-	protected int id=-1;
+	private String title;
+	private String path ;
+	private String auther;
+	private String intro;
+	private Bitmap pic;
+	private Boolean occupy=false;
+	private int id;
+	
 	private int rc[]=new int[]{-1,-1};
+	
 	private ImageView iv;
 	private TextView tv;
-	private Boolean occupy=false;
-	private int new_pview=-2;
+	private ImageView delete_book;
+	private ImageView edit_book;
+	
+	private int edit_W,edit_H;
+	
+	public static int DELETE_BOOK=-99;
+	public static int READ_BOOK=-98;
+	public static int EDIT_BOOK=-97;
 	
 	public PView(Context context, AttributeSet attrs) {
 		super(context, attrs);
@@ -35,31 +50,70 @@ public class PView extends FrameLayout implements OnClickListener , OnLongClickL
 	protected void onFinishInflate(){
 		iv=(ImageView)findViewById(sub.two.Activity.R.id.iv_in_personalview);
 		tv=(TextView)findViewById(sub.two.Activity.R.id.tv_in_personalview);
+		delete_book=(ImageView)findViewById(sub.two.Activity.R.id.delete_book);
+		edit_book=(ImageView)findViewById(sub.two.Activity.R.id.edit_book);
 		iv.setOnClickListener(this);
 		iv.setOnLongClickListener(this);
 		tv.setClickable(false);
-		//Log.v("book", "inflate finish");
+		delete_book.setOnClickListener(this);
+		edit_book.setOnClickListener(this);
+		init();
+		
+//		edit_H=edit_book.getHeight();edit_W=edit_book.getWidth();
+//		FrameLayout.LayoutParams params=(FrameLayout.LayoutParams)edit_book.getLayoutParams();
+//		params.leftMargin=(iv.getLeft()+iv.getRight()-edit_W)/2;			
+//		params.rightMargin=((View)(iv.getParent())).getWidth()-(iv.getLeft()+iv.getRight()+edit_W)/2;
+//		edit_book.setLayoutParams(params);
 	}
+
 	@Override
 	public void onClick(View v) {
 		// TODO Auto-generated method stub
-		View view=(View)v.getParent();
-		rc=RC(v);
-		if (view!=null){
-			Log.v("book", rc[0]+","+rc[1]);
-			//Log.e("book", "occupy:"+occupy);
-			//Log.d("book", title.toString());
-			}
-		
+		Handler_Msg handler_Msg=new Handler_Msg();
+		int idd=-100;
+		switch (v.getId()) {
+		case sub.two.Activity.R.id.iv_in_personalview:
+		case sub.two.Activity.R.id.tv_in_personalview:
+			idd=READ_BOOK;
+			break;
+		case sub.two.Activity.R.id.delete_book:
+			idd=DELETE_BOOK;
+			break;
+		case sub.two.Activity.R.id.edit_book:
+			idd=EDIT_BOOK;
+			break;
+		default:
+			Log.v("book", "error");
+			break;
+		}
+		Message e=handler_Msg.obtainMessage(idd, id);
+		handler_Msg.sendMessage(e);
 	}
 	
 	@Override
 	public boolean onLongClick(View v) {
 		// TODO Auto-generated method stub
-		Log.d("book", "long click");
+		switch (v.getId()) {
+		case sub.two.Activity.R.id.iv_in_personalview:
+		case sub.two.Activity.R.id.tv_in_personalview:
+			set_outer_Visibility(View.VISIBLE);
+			break;
+		default:
+			break;
+		}
 		return false;
 	}
 	
+	public void init(){
+		String title="书名";
+		String path =null;
+		String auther="佚名";
+		String intro="暂无";
+		Bitmap pic=null;
+		Boolean occupy=false;
+		set_inner_Visibility(View.INVISIBLE);
+		set_outer_Visibility(View.GONE);
+	}
 	//判断书籍所在行列
 	public int[] RC(View v){
 		int[] rac=new int[]{-1,-1};
@@ -125,6 +179,20 @@ public class PView extends FrameLayout implements OnClickListener , OnLongClickL
 		intro=s;
 	}
 	
+	public void set_id(int i) {
+		id=i;
+	}
+	
+	public void set_inner_Visibility(int visiable){
+		tv.setVisibility(visiable);
+		iv.setVisibility(visiable);
+	}
+	
+	private void set_outer_Visibility(int visiable){
+		delete_book.setVisibility(visiable);
+		edit_book.setVisibility(visiable);
+	}
+	
 	public Boolean get_occupy(){
 		return occupy;
 	}
@@ -132,4 +200,5 @@ public class PView extends FrameLayout implements OnClickListener , OnLongClickL
 	public String get_Title(){
 		return title;
 	}
+
 }

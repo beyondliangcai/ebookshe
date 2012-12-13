@@ -41,7 +41,7 @@ public class Listener {
     OnClickListener  LogClickListener=new OnClickListener() {
     	@Override
     	public void onClick(View arg0) {
-    		Log.v("book", "login button");
+//    		Log.v("book", "login button");
     		// TODO Auto-generated method stub
     		Intent intent =new Intent();
     		intent.setClass(context,LoginMainActivity.class);
@@ -54,7 +54,7 @@ public class Listener {
 		@Override
 		public void onClick(View v) {
 			// TODO Auto-generated method stub
-			Log.v("book", "search button");
+//			Log.v("book", "search button");
 			Intent searchIntent=new Intent();
 			searchIntent.setClass(context, MyFile.class);
   		    context.startActivity(searchIntent);
