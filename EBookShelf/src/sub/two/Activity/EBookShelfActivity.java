@@ -41,7 +41,7 @@ public class EBookShelfActivity extends Activity {
 	//public static Handler handler;
 	public static List<PView> pview_vec=new ArrayList<PView>();
 	public static List<TextView> shelf_tv=new ArrayList<TextView>();
-
+	public static Context context;
     @Override
     public void onCreate(Bundle savedInstanceState) {
     	 
@@ -68,8 +68,9 @@ public class EBookShelfActivity extends Activity {
     }//onCreat 
     
     private void init(){
+    	context=this.getApplicationContext();
     	//listener
-    	Listener listener=new Listener(this,sv);
+    	Listener listener=new Listener(this);
         //µÇÂ¼ÊÂ¼þ  
         ImageView LoginImageView=(ImageView)findViewById(R.id.login);
         LoginImageView.setOnClickListener(listener.LogClickListener);
@@ -126,11 +127,10 @@ public class EBookShelfActivity extends Activity {
 		
 		for (int j = 1; j <= shelf_tv.size(); j++) {
 			shelf_tv.get(j-1).setText("shelf"+j);
+			Log.v("book", ""+j);
 		}
 		for (int i = 0; i < pview_vec.size(); i++) {
 			pview_vec.get(i).set_id(i);
 		}
 	}
-	
-	
 }
