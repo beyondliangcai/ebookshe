@@ -25,7 +25,6 @@ public class SearchLocalFile extends Service{
 	public static ArrayList name=new ArrayList<String>();
 	public static ArrayList localfile=new ArrayList<String>();
 	public static int ADD_BOOK= -8;
-	public MyDB EbookdDb;
 	public static final String File_Name="filename";
 	public static final String File_Path="filepath";
 	private ArrayList<String> filenameArrayList=new ArrayList<String>();
@@ -119,19 +118,7 @@ public class SearchLocalFile extends Service{
 				e.printStackTrace();
 			}
 		}
-		//将用户添加的书籍插入到数据库中
-		String string="/a";
-		System.out.println(string);
-		EbookdDb =new MyDB(this, "EbookDb.db3", 1);
-	
-		for (int i = 0; i < filenameArrayList.size(); i++) {
 			
-		MyDB.insertdata( EbookdDb.getReadableDatabase(),i+1, filenameArrayList.get(i),filepathArrayList.get(i), null, null, null);
-		
-		}
-	
-		
-		
 		Bundle bundle=new Bundle();
 		bundle.putStringArrayList(File_Name, filenameArrayList);
 		bundle.putStringArrayList(File_Path, filepathArrayList);
