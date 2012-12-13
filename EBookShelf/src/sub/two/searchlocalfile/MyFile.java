@@ -64,10 +64,10 @@ public class MyFile extends ListActivity  implements OnItemLongClickListener {
   protected final static int MENU_SET =    Menu.FIRST + 1;       //设置
   protected final static int MENU_ABOUT =  Menu.FIRST + 2;       //关于  
   protected final static int MENU_ADDFILE=  Menu.FIRST + 3;
-  private MyAdb db;
+  
   private CheckBox cb_open;
   private CheckBox cb_zoom;
-  private Cursor myCursor;
+  
   private int id = 0;
   private int isZoom = 0;
   private int isOpen = 0;
@@ -145,18 +145,7 @@ public class MyFile extends ListActivity  implements OnItemLongClickListener {
     for (int i = 0; i < 100; i++) {
 		flag[i]=0;
 	}
-    db = new MyAdb(this);
-    myCursor = db.getFileSet();
-    if(myCursor.moveToFirst()){
-      id = myCursor.getInt(myCursor.getColumnIndex("_ID"));
-      isZoom = myCursor.getInt(myCursor.getColumnIndex("ISZOOM"));
-      isOpen = myCursor.getInt(myCursor.getColumnIndex("ISOPEN"));
-    }else{
-      db.insertFileSet(isZoom, isOpen);
-      myCursor = db.getFileSet();
-      myCursor.moveToFirst();
-      id = myCursor.getInt(myCursor.getColumnIndex("_ID"));
-    }
+    
     
     path_edit = (EditText)findViewById(R.id.path_edit);
     
@@ -747,12 +736,7 @@ public class MyFile extends ListActivity  implements OnItemLongClickListener {
               }else{
                 isOpen = 0;
               }
-              if(db.updateFileSet(id,isZoom,isOpen)!=0){
-                  Toast.makeText(MyFile.this,"已设置!",Toast.LENGTH_SHORT).show();
-                  getFileDir(rootPath);
-              }else{
-                  Toast.makeText(MyFile.this,"出错!",Toast.LENGTH_SHORT).show();
-              }
+              
             }
           })
           .setNegativeButton("取消",
