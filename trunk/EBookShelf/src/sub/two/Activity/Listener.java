@@ -1,21 +1,13 @@
 package sub.two.Activity;
 
-import sub.two.PersonalView.PView;
 import sub.two.WebviewBrowser.Main;
 import sub.two.searchlocalfile.MyFile;
-import android.R.raw;
-import android.app.Activity;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.ScrollView;
-import android.widget.TextView;
+
 
 public class Listener {
 	private Context context;
@@ -64,65 +56,5 @@ public class Listener {
 		}
 	};
 	
-	DialogInterface.OnClickListener delete_confirm_yes =new DialogInterface.OnClickListener() {
-		
-		@Override
-		public void onClick(DialogInterface dialog, int which) {
-			// TODO Auto-generated method stub
-			
-		}
-	};
-	
-	DialogInterface.OnClickListener delete_confirm_no =new DialogInterface.OnClickListener() {
-		
-		@Override
-		public void onClick(DialogInterface dialog, int which) {
-			// TODO Auto-generated method stub
-			
-		}
-	};
-//	//主界面3栏的pview事件监听
-//	OnClickListener pview_onClickListener=new OnClickListener() {
-//		
-//		@Override
-//		public void onClick(View v) {
-//			// TODO Auto-generated method stub
-//			int i=compare(v);
-//			if (i!=-1)
-//				Log.v("book", "pview click on :"+((i/3)+1)+","+i%3);
-//			
-//			View view=LayoutInflater.from(context).inflate(R.layout.readanddetail, null);
-//			ImageView im1=(ImageView)view.findViewById(R.id.read);
-//			ImageView im2=(ImageView)view.findViewById(R.id.detail);
-//			// read book
-//			im1.setOnClickListener(new OnClickListener() {
-//				
-//				@Override
-//				public void onClick(View v) {
-//					// TODO Auto-generated method stub
-//
-//				}
-//			});
-//			//jump to detail page
-//			im2.setOnClickListener(new OnClickListener() {
-//				
-//				@Override
-//				public void onClick(View v) {
-//					// TODO Auto-generated method stub
-//					
-//				}
-//			});
-//		}
-//	};//here is the end of listener
-//	
-//	//if the given view is one of the 9 ,return its number
-//	//else return not found;
-//	public int compare(View v){
-//		for(int i=0;i<9;i++){
-//			if(view_coll[i]==v)
-//				return i+1;
-//		}
-//		return NOT_FOUND;
-//	}
 	
 }
