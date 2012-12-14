@@ -112,8 +112,8 @@ public class PView extends FrameLayout implements OnClickListener , OnLongClickL
 		String intro="暂无";
 		Bitmap pic=null;
 		Boolean occupy=false;
-		set_inner_Visibility(View.INVISIBLE);
-		set_outer_Visibility(View.GONE);
+//		set_inner_Visibility(View.INVISIBLE);
+//		set_outer_Visibility(View.GONE);
 	}
 	//判断书籍所在行列
 	public int[] RC(View v){
@@ -223,5 +223,13 @@ public class PView extends FrameLayout implements OnClickListener , OnLongClickL
 	
 	public String get_image_path(){
 		return pic_path;
+	}
+	
+	public int get_delelt_id(){
+		return delete_book.getId();
+	}
+	
+	public int get_edit_id(){
+		return edit_book.getId();
 	}
 }

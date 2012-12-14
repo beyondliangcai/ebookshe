@@ -21,6 +21,7 @@ import android.os.Message;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.ScrollView;
 import android.widget.TextView;
@@ -66,9 +67,23 @@ public class EBookShelfActivity extends Activity {
 				}        	      
         	}
     }//onCreat 
-    
+    @Override
+    protected void onStart(){
+    	super.onStart();
+		for (int i = 0; i < pview_vec.size(); i++) {
+			ImageView iv=(ImageView)(pview_vec.get(i)).findViewById(R.id.iv_in_personalview);
+			ImageView delete=(ImageView)(pview_vec.get(i)).findViewById(R.id.delete_book);
+			ImageView edit=(ImageView)(pview_vec.get(i)).findViewById(R.id.edit_book);
+			FrameLayout.LayoutParams params1=(FrameLayout.LayoutParams)delete.getLayoutParams();
+			FrameLayout.LayoutParams params2=(FrameLayout.LayoutParams)edit.getLayoutParams();
+			params2.leftMargin=(iv.getLeft()+iv.getRight()-edit.getWidth())/2;
+			edit.setLayoutParams(params2);
+			Log.v("book", "change edit location sccessfully!"+iv.getLeft()+","+
+					iv.getRight()+","+edit.getWidth());
+		}
+    }
     private void init(){
-    	context=this.getApplicationContext();
+    	context=this;
     	//listener
     	Listener listener=new Listener(this);
         //µÇÂ¼ÊÂ¼þ  
@@ -132,5 +147,7 @@ public class EBookShelfActivity extends Activity {
 		for (int i = 0; i < pview_vec.size(); i++) {
 			pview_vec.get(i).set_id(i);
 		}
+		
+
 	}
 }
