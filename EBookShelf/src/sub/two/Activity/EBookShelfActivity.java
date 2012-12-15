@@ -85,8 +85,7 @@ public class EBookShelfActivity extends Activity {
     	 if(keyCode == KeyEvent.KEYCODE_BACK){
     		 android.os.Process.killProcess(android.os.Process.myPid());
     		 
-    	 }
-    	 
+    	 }    	 
 		return super.onKeyDown(keyCode, event);
 	}
 

@@ -48,14 +48,14 @@ public class SearchLocalFile extends Service{
                         HashMap map = new HashMap();  
                         HashMap map2 = new HashMap();
                         int i;
-                        
+                       
                         for ( i = 0; i < filenameArrayList.size(); i++) {
 							if (fileName.equals(filenameArrayList.get(i).toString())) {
 								
 								break;
 							}
 						}
-                        if (i==filenameArrayList.size()||filenameArrayList.size()==0) {
+                        if (i==filenameArrayList.size()) {
                         	 filenameArrayList.add(fileName);
                         	 filepathArrayList.add(localpathString);
                         //	 count++;
