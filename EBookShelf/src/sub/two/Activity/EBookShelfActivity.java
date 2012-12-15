@@ -19,6 +19,7 @@ import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.Window;
 import android.widget.FrameLayout;
@@ -67,22 +68,22 @@ public class EBookShelfActivity extends Activity {
 				}        	      
         	}
     }//onCreat 
+
+    //按返回键事件处理
     @Override
-    protected void onStart(){
-    	super.onStart();
-		for (int i = 0; i < pview_vec.size(); i++) {
-			ImageView iv=(ImageView)(pview_vec.get(i)).findViewById(R.id.iv_in_personalview);
-			ImageView delete=(ImageView)(pview_vec.get(i)).findViewById(R.id.delete_book);
-			ImageView edit=(ImageView)(pview_vec.get(i)).findViewById(R.id.edit_book);
-			FrameLayout.LayoutParams params1=(FrameLayout.LayoutParams)delete.getLayoutParams();
-			FrameLayout.LayoutParams params2=(FrameLayout.LayoutParams)edit.getLayoutParams();
-			params2.leftMargin=(iv.getLeft()+iv.getRight()-edit.getWidth())/2;
-			edit.setLayoutParams(params2);
-			Log.v("book", "change edit location sccessfully!"+iv.getLeft()+","+
-					iv.getRight()+","+edit.getWidth());
-		}
-    }
+	public boolean onKeyDown(int keyCode, KeyEvent event) {
+		// TODO Auto-generated method stub
+    	 if(keyCode == KeyEvent.KEYCODE_BACK){
+    		 android.os.Process.killProcess(android.os.Process.myPid());
+    		 
+    	 }
+    	 
+		return super.onKeyDown(keyCode, event);
+	}
+
+	
     private void init(){
+
     	context=this;
     	//listener
     	Listener listener=new Listener(this);

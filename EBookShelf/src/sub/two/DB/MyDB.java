@@ -33,10 +33,18 @@ public class MyDB extends SQLiteOpenHelper {
 		
 
 	}
+	public void deletedatabyfilename(){
+		
+		
+		
+	}
+	public void deletealldata(SQLiteDatabase EbookDb) {
+		EbookDb.execSQL("delete from BookDB ");
+	}
 	public  void insertdata(SQLiteDatabase EbookDb ,int id,String title,String path,
 			String auther ,String intro,String pic) {
 		System.out.println("insert ....!");
-		EbookDb.execSQL("delete from BookDB ");
+		
 		EbookDb.execSQL("insert into BookDB values("+id+",?,?,?,?,?)",new String[]{title,path,auther,intro,pic});
 	    System.out.println("insert sucess!");
 	}

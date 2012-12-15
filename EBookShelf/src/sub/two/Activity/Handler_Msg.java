@@ -73,6 +73,7 @@ public class Handler_Msg extends Handler{
 		int ddq=(vec.size()>name.size())? name.size():vec.size();
 		int temp=0;
 		Log.v("book", name.toString());
+		WelcomActivity.EbookdDb.deletealldata(WelcomActivity.EbookdDb.getReadableDatabase());
 		for (int i = 0; i < ddq; i++) {
 			if(!vec.get(i).get_occupy()){
 				vec.get(i).set_inner_Visibility(View.VISIBLE);
@@ -81,9 +82,11 @@ public class Handler_Msg extends Handler{
 					st[0]=st[0].substring(0,5);
 				vec.get(i).set_Title(st[0]);
 				vec.get(i).set_occupy(true);
+				
 				WelcomActivity.EbookdDb.insertdata(WelcomActivity.EbookdDb.getReadableDatabase(),
 						vec.get(i).get_id(),vec.get(i).get_Title(),vec.get(i).get_path(),vec.get(i).get_Auther()
 						,vec.get(i).get_intro(),vec.get(i).get_image_path());
+				WelcomActivity.EbookdDb.close();
 				}
 			temp++;
 		}
