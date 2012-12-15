@@ -16,7 +16,7 @@ import android.util.Log;
 import android.view.View;
 
 public class Handler_Msg extends Handler{
-	public List<PView> pview=new ArrayList<PView>();
+	public static List<PView> pview=new ArrayList<PView>();
 	
 	public static int TRUE=-95;
 	public static int FLASE=-94;
@@ -138,6 +138,7 @@ public class Handler_Msg extends Handler{
 		int ddq=(vec.size()>name.size())? name.size():vec.size();
 		int temp=0;
 //		Log.v("book", name.toString());
+		
 		WelcomActivity.EbookdDb.deletealldata(WelcomActivity.EbookdDb.getReadableDatabase());
 		for (int i = 0; i < ddq; i++) {
 			if(!vec.get(i).get_occupy()){
@@ -148,14 +149,22 @@ public class Handler_Msg extends Handler{
 				vec.get(i).set_Title(st[0]);
 				vec.get(i).set_occupy(true);
 				
-				WelcomActivity.EbookdDb.insertdata(WelcomActivity.EbookdDb.getReadableDatabase(),
-						vec.get(i).get_id(),vec.get(i).get_Title(),vec.get(i).get_path(),vec.get(i).get_Auther()
-						,vec.get(i).get_intro(),vec.get(i).get_image_path());
-				WelcomActivity.EbookdDb.close();
-				}
-		
+				
+				}		
 			temp++;
 		}
+		for (int j = 0; j < SearchLocalFile.filenameArrayList.size();j++) {
+			WelcomActivity.EbookdDb.insertdata(WelcomActivity.EbookdDb.getReadableDatabase(),
+					j,
+					SearchLocalFile.filenameArrayList.get(j),
+					SearchLocalFile.filepathArrayList.get(j),
+					pview.get(j).get_Auther()
+					,pview.get(j).get_intro(),
+					pview.get(j).get_intro());
+			
+			}
+			WelcomActivity.EbookdDb.close();
+		
 		Log.v("book", "add book successfully!");
 	}
 	
