@@ -44,6 +44,8 @@ public class EBookShelfActivity extends Activity {
 	public static List<PView> pview_vec=new ArrayList<PView>();
 	public static List<TextView> shelf_tv=new ArrayList<TextView>();
 	public static Context context;
+	public static int ADD_BOOK_WHILE_START=-92;
+	private static int count=0;
     @Override
     public void onCreate(Bundle savedInstanceState) {
     	 
@@ -54,6 +56,13 @@ public class EBookShelfActivity extends Activity {
         //初始化一些参数
         init();
         init_pview();
+        
+        if(count==0){
+        	Handler_Msg handle=new Handler_Msg();
+        	Message e=handle.obtainMessage(ADD_BOOK_WHILE_START);
+        	handle.sendMessage(e);
+        	count++;
+        }
         
         if (Environment.getExternalStorageDirectory().equals(Environment.MEDIA_MOUNTED)) {
         	Ebookdir=new File("/sdcard/Ebookdir");
@@ -143,7 +152,6 @@ public class EBookShelfActivity extends Activity {
 		
 		for (int j = 1; j <= shelf_tv.size(); j++) {
 			shelf_tv.get(j-1).setText("shelf"+j);
-			Log.v("book", ""+j);
 		}
 		for (int i = 0; i < pview_vec.size(); i++) {
 			pview_vec.get(i).set_id(i);

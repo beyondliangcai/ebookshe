@@ -27,8 +27,9 @@ public class SearchLocalFile extends Service{
 	public static int ADD_BOOK= -8;
 	public static final String File_Name="filename";
 	public static final String File_Path="filepath";
-	private ArrayList<String> filenameArrayList=new ArrayList<String>();
-	private ArrayList<String> filepathArrayList=new ArrayList<String>();
+	public static ArrayList<String> filenameArrayList=new ArrayList<String>();
+	public static ArrayList<String> filepathArrayList=new ArrayList<String>();
+	static int count=0;
 	//public static int count=0;             本打算计算添加了几本书籍的，但貌似启动service的时候有延迟总是少一次....
 	public RandomAccessFile locallog;
 	private void getFileName(File[] files) {       //收索sd卡上所有.txt的文件
@@ -72,6 +73,8 @@ public class SearchLocalFile extends Service{
     }  
 	@Override
 	public void onStart(Intent intent, int startId) {
+		Log.v("book", ""+count);
+		count++;
 		// TODO Auto-generated method stub
 		super.onStart(intent, startId);		
 		//File path = Environment.getExternalStorageDirectory();// 获得SD卡路径  

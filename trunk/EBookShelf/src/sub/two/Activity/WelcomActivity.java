@@ -4,12 +4,15 @@ import java.util.ArrayList;
 
 import sub.two.DB.MyDB;
 import sub.two.PersonalView.PView;
+import sub.two.Service.SearchLocalFile;
+import sub.two.searchlocalfile.searchfile;
 import android.R.integer;
 import android.app.Activity;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.Window;
 import android.view.WindowManager;
 
@@ -46,10 +49,13 @@ public class WelcomActivity extends Activity {             //Ïë×öÒ»¸ö¿ª»úµÄÆô¶¯»
                         	tempBok_tmp.path=bookCursor.getString(3);
                         	tempBok_tmp.pic_path=bookCursor.getString(4);
                         	tempBok_tmp.intro=bookCursor.getString(5);						
-							Ebooks.add(tempBok_tmp);						
+							Ebooks.add(tempBok_tmp);	
+							SearchLocalFile.filenameArrayList.add(tempBok_tmp.title);
+							SearchLocalFile.filepathArrayList.add(tempBok_tmp.path);
+							
 						
 						}
-                        	System.out.println(Ebooks.size());	 
+                        	Log.v("book", ""+Ebooks.size());	 
                         	Thread.sleep(100);
                         } catch (InterruptedException e) {
                                 e.printStackTrace();
