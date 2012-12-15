@@ -6,6 +6,7 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.net.Uri;
+import android.os.Handler;
 import android.os.Message;
 import android.text.StaticLayout;
 import android.util.AttributeSet;
@@ -36,36 +37,36 @@ public class PView extends FrameLayout implements OnClickListener , OnLongClickL
 	private ImageView delete_book;
 	private ImageView edit_book;
 	
-	private int edit_W,edit_H;
-	
 	public static int DELETE_BOOK=-99;
 	public static int READ_BOOK=-98;
 	public static int EDIT_BOOK=-97;
+	public static int CHANGE_BOOK_STATE=-96;
+	
+	public static Handler h1;
 	
 	public PView(Context context, AttributeSet attrs) {
 		super(context, attrs);
 		// TODO Auto-generated constructor stub
 	}
-	
+
 	@Override
 	protected void onFinishInflate(){
 		iv=(ImageView)findViewById(sub.two.Activity.R.id.iv_in_personalview);
 		tv=(TextView)findViewById(sub.two.Activity.R.id.tv_in_personalview);
 		delete_book=(ImageView)findViewById(sub.two.Activity.R.id.delete_book);
 		edit_book=(ImageView)findViewById(sub.two.Activity.R.id.edit_book);
+		
 		iv.setOnClickListener(this);
 		iv.setOnLongClickListener(this);
-		tv.setClickable(false);
+		
 		delete_book.setOnClickListener(this);
 		edit_book.setOnClickListener(this);
 		init();
-		
-//		edit_H=edit_book.getHeight();edit_W=edit_book.getWidth();
-//		FrameLayout.LayoutParams params=(FrameLayout.LayoutParams)edit_book.getLayoutParams();
-//		params.leftMargin=(iv.getLeft()+iv.getRight()-edit_W)/2;			
-//		params.rightMargin=((View)(iv.getParent())).getWidth()-(iv.getLeft()+iv.getRight()+edit_W)/2;
-//		edit_book.setLayoutParams(params);
+		FrameLayout.LayoutParams params=(FrameLayout.LayoutParams)edit_book.getLayoutParams();
+		params.leftMargin=10;		
+		edit_book.setLayoutParams(params);
 	}
+	
 
 	@Override
 	public void onClick(View v) {
@@ -94,26 +95,32 @@ public class PView extends FrameLayout implements OnClickListener , OnLongClickL
 	@Override
 	public boolean onLongClick(View v) {
 		// TODO Auto-generated method stub
+		Handler_Msg handle=new Handler_Msg();
+		int ss=-100;
 		switch (v.getId()) {
 		case sub.two.Activity.R.id.iv_in_personalview:
 		case sub.two.Activity.R.id.tv_in_personalview:
-			set_outer_Visibility(View.VISIBLE);
+			ss=CHANGE_BOOK_STATE;
+//			set_outer_Visibility(View.VISIBLE);
 			break;
 		default:
 			break;
 		}
+		Message e=handle.obtainMessage(ss, id, 0);
+		handle.sendMessage(e);
 		return false;
 	}
 	
 	public void init(){
-		String title="书名";
-		String path =null;
-		String auther="佚名";
-		String intro="暂无";
-		Bitmap pic=null;
-		Boolean occupy=false;
-//		set_inner_Visibility(View.INVISIBLE);
-//		set_outer_Visibility(View.GONE);
+		title="书名";
+		path =null;
+		auther="佚名";
+		intro="暂无";
+		pic=null;
+		occupy=false;
+		
+		set_inner_Visibility(View.INVISIBLE);
+		set_outer_Visibility(View.GONE);
 	}
 	//判断书籍所在行列
 	public int[] RC(View v){
@@ -153,6 +160,11 @@ public class PView extends FrameLayout implements OnClickListener , OnLongClickL
 		}
 	}
 	
+	public void set_clickable(Boolean b) {
+		iv.setClickable(b);
+		tv.setClickable(b);
+	}
+	
 	public void set_occupy(Boolean b) {
 		occupy=b;
 	}
@@ -187,12 +199,13 @@ public class PView extends FrameLayout implements OnClickListener , OnLongClickL
 	public void set_pic_path(String qq){
 		pic_path=qq;
 	}
+	
 	public void set_inner_Visibility(int visiable){
 		tv.setVisibility(visiable);
 		iv.setVisibility(visiable);
 	}
 	
-	private void set_outer_Visibility(int visiable){
+	public void set_outer_Visibility(int visiable){
 		delete_book.setVisibility(visiable);
 		edit_book.setVisibility(visiable);
 	}
