@@ -1,8 +1,13 @@
 package sub.two.Activity;
 
+import java.util.ArrayList;
+
 import sub.two.DB.MyDB;
+import sub.two.PersonalView.PView;
+import android.R.integer;
 import android.app.Activity;
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.Window;
@@ -10,6 +15,9 @@ import android.view.WindowManager;
 
 public class WelcomActivity extends Activity {             //Ïë×öÒ»¸ö¿ª»úµÄÆô¶¯»­Ãæ
 	public static MyDB EbookdDb;
+	public ArrayList<bok_tmp> Ebooks=new ArrayList<bok_tmp>();
+	public Cursor bookCursor;
+	public int rows;
 			
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -27,7 +35,22 @@ public class WelcomActivity extends Activity {             //Ïë×öÒ»¸ö¿ª»úµÄÆô¶¯»
         new Thread() {
                 public void run() {
                         try {
-                                Thread.sleep(100);
+                        	bok_tmp tempBok_tmp = new bok_tmp();
+                        	bookCursor=EbookdDb.getReadableDatabase().query("BookDB", new String[]{"id,title,path,auther,intro,pic"}, null, null, null, null, null);
+                        
+                      
+                        	while (bookCursor.moveToNext()) {
+                        	tempBok_tmp.id=bookCursor.getInt(0);
+                        	tempBok_tmp.title=bookCursor.getString(1);
+                        	tempBok_tmp.auther=bookCursor.getString(2);
+                        	tempBok_tmp.path=bookCursor.getString(3);
+                        	tempBok_tmp.pic_path=bookCursor.getString(4);
+                        	tempBok_tmp.intro=bookCursor.getString(5);						
+							Ebooks.add(tempBok_tmp);						
+						
+						}
+                        	System.out.println(Ebooks.size());	 
+                        	Thread.sleep(100);
                         } catch (InterruptedException e) {
                                 e.printStackTrace();
                         }
