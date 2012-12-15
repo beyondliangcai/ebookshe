@@ -75,7 +75,7 @@ public class Main extends Activity
     private ImageButton backBtn = null;
     private ListView list = null;
     private Button go_back = null;
-    private ImageButton menuBtn = null;
+ 
     
     private final static int HISTORY_ITEM = 0;	//历史记录
 	private final static int HTTP_ITEM = 1;	//关于
@@ -83,19 +83,16 @@ public class Main extends Activity
 	private final static int ADD_FAVORITE = 3;	//加入收藏夹
 	private final static int FAVORITE_ITEM = 4;	//收藏夹
 	private final static int PREFERENCE_ITEM = 5;		//帮助网页
-	private final static int EXIT_ITEM = 7;		//退出
+	private final static int EXIT_ITEM = 6;		//退出
 	
-	//private String cur_url = "http://192.168.41.50:8080/EBookShelf/";
-   private String cur_url = "http://www.baidu.com/";
-	private final String ACTION_ADD_SHORTCUT = "com.android.launcher.action.INSTALL_SHORTCUT";
+	// private String cur_url = "http://192.168.132.50:8080/EBookShelf/";
+  private String cur_url = "http://www.baidu.com/";	
 	List<Map<String, Object>> history_data = new ArrayList<Map<String, Object>>();
 	List<HistoryBean> xml_data = new ArrayList<HistoryBean>();	
 	String[] dialog_data = new String[]{};
-	public int selectId = 0;
-	
+	public int selectId = 0;	
 	SharedPreferences sp;
-	Drawable drawable;
-	
+	Drawable drawable;	
 	private static String SAVE_KEY = "save-view";
 	
 	public static Main instance;
@@ -106,10 +103,9 @@ public class Main extends Activity
 	        Log.w("debug.onCreate","onCreate");
 	        requestWindowFeature(Window.FEATURE_PROGRESS);//让进度条显示在标题栏上 
 	        
-	        mOpenHelper = new SQLiteHelper(this);
-	        directCall = new Intent(Intent.ACTION_MAIN);//快捷方式
+	        mOpenHelper = new SQLiteHelper(this);	     
 	        onInit();	
-	        instance = this;	        
+	        instance = this;	    
 	        
 		    if (savedInstanceState == null) 		        
 		    {
@@ -127,7 +123,7 @@ public class Main extends Activity
 	
     private void onInit() {
         setContentView(R.layout.browsermainlayout);
-        	
+   //	 mWebView.loadUrl(cur_url);
         	edit = (EditText)findViewById(R.id.edit_1);
 
         	mWebView = (WebView) findViewById(R.id.wv1); 
@@ -137,9 +133,10 @@ public class Main extends Activity
         	forwardBtn = (ImageButton)findViewById(R.id.forward_btn);
 
         	backBtn = (ImageButton)findViewById(R.id.back_btn);
-
-        	menuBtn = (ImageButton)findViewById(R.id.menu_btn);
-
+        
+        System.out.println("test");
+        
+  
         btn.setOnClickListener( new Button.OnClickListener()
         {
             public void onClick( View v )
@@ -173,14 +170,7 @@ public class Main extends Activity
             		mWebView.goBack();
             }
         } );
-        menuBtn.setOnClickListener( new Button.OnClickListener()
-        {
-            public void onClick( View v )
-            {
-            	context.openOptionsMenu();
-            }
-        } );
-        
+      
         mWebView.setWebViewClient(new WebViewClient(){     
         	public boolean shouldOverrideUrlLoading(WebView  view, String url) {     
         		
@@ -195,7 +185,8 @@ public class Main extends Activity
 					connection.setDoInput(true);
 					
 					if (connection.getContentType().equals("application/x-msdownload")) {
-						System.out.println(123);
+						
+						
 						filesize=connection.getContentLength();					
 						 inStream=connection.getInputStream();	
 						 byte[] buffer=new byte[1024];
@@ -213,6 +204,7 @@ public class Main extends Activity
 						
 					}
 					else {
+						
 						mWebView.loadUrl(url);  
 					}
 				

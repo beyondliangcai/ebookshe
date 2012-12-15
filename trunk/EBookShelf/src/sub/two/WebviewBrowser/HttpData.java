@@ -65,7 +65,7 @@ public class HttpData extends Activity
     @Override   
     public void onCreate(Bundle savedInstanceState) {   
         super.onCreate(savedInstanceState);   
-;   
+
         Intent intent = this.getIntent();   
         Bundle b = intent.getExtras();   
         int id = b.getInt("id");

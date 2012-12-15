@@ -36,7 +36,7 @@ public class WriteFavoriteXml
 	
 	public void onReadXml()
     {      
-      File file = new File("/data/data/cn.android.browser/files/history.xml");
+      File file = new File("/data/data/sub.two.Activity/files/history.xml");
       if( !file.exists() )
       {
         Log.e("File_Error","Couldn't find file...");
