@@ -38,7 +38,10 @@ public class EBookShelfActivity extends Activity {
 	public File[] currentfiles;
 	public File Ebookdir;
 	
-	public ScrollView sv;
+	public static ScrollView sv;
+	
+	public static int SHELF_COUNT=0;
+	public static int ID_COUNT=9;
 	private View shelf,shelf2,shelf3,hr1,hr2,hr3;
 	//public static Handler handler;
 	public static List<PView> pview_vec=new ArrayList<PView>();
@@ -125,6 +128,7 @@ public class EBookShelfActivity extends Activity {
 		pview_vec.add(view2);
 		PView view3=(PView)hr1.findViewById(R.id.IV3);
 		pview_vec.add(view3);
+		
 		//shelf2
 		shelf2=sv.findViewById(R.id.shelf2);
 		TextView tx2=(TextView)shelf2.findViewById(R.id.tv_in_shelf);
@@ -151,7 +155,9 @@ public class EBookShelfActivity extends Activity {
 		
 		for (int j = 1; j <= shelf_tv.size(); j++) {
 			shelf_tv.get(j-1).setText("shelf"+j);
+			SHELF_COUNT++;
 		}
+		Log.v("book", ""+SHELF_COUNT);
 		for (int i = 0; i < pview_vec.size(); i++) {
 			pview_vec.get(i).set_id(i);
 		}

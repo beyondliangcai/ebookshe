@@ -40,8 +40,7 @@ public class WelcomActivity extends Activity {             //Ïë×öÒ»¸ö¿ª»úµÄÆô¶¯»
                         try {
                         	bok_tmp tempBok_tmp = new bok_tmp();
                         	bookCursor=EbookdDb.getReadableDatabase().query("BookDB", new String[]{"id,title,path,auther,intro,pic"}, null, null, null, null, null);
-                        
-                      
+                 
                         	while (bookCursor.moveToNext()) {
                         	tempBok_tmp.id=bookCursor.getInt(0);
                         	tempBok_tmp.title=bookCursor.getString(1);
@@ -51,11 +50,9 @@ public class WelcomActivity extends Activity {             //Ïë×öÒ»¸ö¿ª»úµÄÆô¶¯»
                         	tempBok_tmp.intro=bookCursor.getString(5);						
 							Ebooks.add(tempBok_tmp);	
 							SearchLocalFile.filenameArrayList.add(tempBok_tmp.title);
-							SearchLocalFile.filepathArrayList.add(tempBok_tmp.path);
-							
-						
+							SearchLocalFile.filepathArrayList.add(tempBok_tmp.path);												
 						}
-                        	Log.v("book", ""+Ebooks.size());	 
+//                        	Log.v("book", ""+Ebooks.size());	 
                         	Thread.sleep(100);
                         } catch (InterruptedException e) {
                                 e.printStackTrace();
