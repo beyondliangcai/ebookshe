@@ -52,7 +52,7 @@ public class WelcomActivity extends Activity {             //Ïë×öÒ»¸ö¿ª»úµÄÆô¶¯»
 							SearchLocalFile.filenameArrayList.add(tempBok_tmp.title);
 							SearchLocalFile.filepathArrayList.add(tempBok_tmp.path);												
 						}
-//                        	Log.v("book", ""+Ebooks.size());	 
+                       	Log.v("book", ""+Ebooks.size());	 
                         	Thread.sleep(100);
                         } catch (InterruptedException e) {
                                 e.printStackTrace();
