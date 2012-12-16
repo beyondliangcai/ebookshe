@@ -42,11 +42,10 @@ public class MyDB extends SQLiteOpenHelper {
 		EbookDb.execSQL("delete from BookDB ");
 	}
 	public  void insertdata(SQLiteDatabase EbookDb ,int id,String title,String path,
-			String auther ,String intro,String pic) {
-		System.out.println("insert ....!");
+			String auther ,String intro,String pic) {	
 		
 		EbookDb.execSQL("insert into BookDB values("+id+",?,?,?,?,?)",new String[]{title,path,auther,intro,pic});
-	    System.out.println("insert sucess!");
+	  
 	}
 
 }

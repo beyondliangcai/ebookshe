@@ -6,6 +6,7 @@ import java.util.List;
 import sub.two.DB.MyDB;
 import sub.two.PersonalView.PView;
 import sub.two.Service.SearchLocalFile;
+import sub.two.searchlocalfile.searchfile;
 import android.R.integer;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -33,12 +34,41 @@ public class Handler_Msg extends Handler{
 	public Handler_Msg() {
 //		pview=EBookShelfActivity.pview_vec;
 	}
-	
+
 	@Override
 	public void handleMessage(Message msg){
 		//ADD_BOOK_WHILE_START
 		if(msg.what==EBookShelfActivity.ADD_BOOK_WHILE_START){
 			Log.v("book", "add book while the app starts");
+			if(SearchLocalFile.filenameArrayList.size()>EBookShelfActivity.pview_vec.size()) {
+				int i=SearchLocalFile.filenameArrayList.size()-EBookShelfActivity.pview_vec.size();
+				LinearLayout linearLayout=(LinearLayout)(EBookShelfActivity.sv).findViewById(R.id.main_shelf);
+				for (int j = 0; j < i/3+1; j++) {
+					View view=LayoutInflater.from(EBookShelfActivity.context).inflate(R.layout.shelf, null);
+					view.setId(SHELF_NAME+(++EBookShelfActivity.SHELF_COUNT));
+					linearLayout.addView(view);
+					
+					View shelf=EBookShelfActivity.sv.findViewById(SHELF_NAME+EBookShelfActivity.SHELF_COUNT);
+					View hr=shelf.findViewById(R.id.orgin_hline);
+					
+					TextView tx1=(TextView)shelf.findViewById(R.id.tv_in_shelf);
+					EBookShelfActivity.shelf_tv.add(tx1);
+					tx1.setText("shelf"+EBookShelfActivity.SHELF_COUNT);
+					
+					PView view1=(PView)hr.findViewById(R.id.IV1);
+					view1.set_id(EBookShelfActivity.ID_COUNT++);
+					EBookShelfActivity.pview_vec.add(view1);
+					
+					PView view2=(PView)hr.findViewById(R.id.IV2);
+					view2.set_id(EBookShelfActivity.ID_COUNT++);
+					EBookShelfActivity.pview_vec.add(view2);
+					
+					PView view3=(PView)hr.findViewById(R.id.IV3);
+					view3.set_id(EBookShelfActivity.ID_COUNT++);
+					EBookShelfActivity.pview_vec.add(view3);
+					
+				}
+			}
 			addbook(SearchLocalFile.filenameArrayList,
 					SearchLocalFile.filepathArrayList, EBookShelfActivity.pview_vec);
 		}
@@ -96,32 +126,7 @@ public class Handler_Msg extends Handler{
 			movebook(SearchLocalFile.filenameArrayList, SearchLocalFile.filepathArrayList,
 					EBookShelfActivity.pview_vec, i);
 			
-			WelcomActivity.EbookdDb.deletealldata(WelcomActivity.EbookdDb.getReadableDatabase());
-			for (int j = 0; j < SearchLocalFile.filenameArrayList.size(); j++) {				
-				WelcomActivity.EbookdDb.insertdata(WelcomActivity.EbookdDb.getReadableDatabase(),
-					j,
-					SearchLocalFile.filenameArrayList.get(j),
-					SearchLocalFile.filepathArrayList.get(j),
-					EBookShelfActivity.pview_vec.get(j).get_Auther(),
-					EBookShelfActivity.pview_vec.get(j).get_intro(),
-					EBookShelfActivity.pview_vec.get(j).get_image_path());
 			
-			}
-			
-			Cursor testCursor;
-			testCursor=WelcomActivity.EbookdDb.getReadableDatabase().query("BookDB", new String[]{"id,title,path,auther,intro,pic"}, null, null, null, null, null);
-            
-            bok_tmp tempBok_tmp=new bok_tmp();
-        	while (testCursor.moveToNext()) {
-        	tempBok_tmp.id=testCursor.getInt(0);
-        	tempBok_tmp.title=testCursor.getString(1);
-        	tempBok_tmp.auther=testCursor.getString(2);
-        	tempBok_tmp.path=testCursor.getString(3);
-        	tempBok_tmp.pic_path=testCursor.getString(5);
-        	tempBok_tmp.intro=testCursor.getString(4);						
-        	Log.v("book",tempBok_tmp.title);
-			}					
-			WelcomActivity.EbookdDb.close();
 		}
 		
 		//delete book
@@ -146,11 +151,42 @@ public class Handler_Msg extends Handler{
 					@Override
 					public void onClick(DialogInterface dialog, int which) {
 						// TODO Auto-generated method stub
+						
 						EBookShelfActivity.pview_vec.get(i).init();
 						SearchLocalFile.filenameArrayList.remove(i);
+						SearchLocalFile.filepathArrayList.remove(i);
+						WelcomActivity.EbookdDb.deletealldata(WelcomActivity.EbookdDb.getReadableDatabase());
+						for (int j = 0; j < SearchLocalFile.filenameArrayList.size(); j++) {				
+							WelcomActivity.EbookdDb.insertdata(WelcomActivity.EbookdDb.getReadableDatabase(),
+								j,
+								SearchLocalFile.filenameArrayList.get(j),
+								SearchLocalFile.filepathArrayList.get(j),
+								null,
+								null,
+								null);
+						
+						}
+						
+//						Cursor testCursor;
+//						testCursor=WelcomActivity.EbookdDb.getReadableDatabase().query("BookDB", new String[]{"id,title,path,auther,intro,pic"}, null, null, null, null, null);
+//			            
+//			            bok_tmp tempBok_tmp=new bok_tmp();
+//			        	while (testCursor.moveToNext()) {
+//			        	tempBok_tmp.id=testCursor.getInt(0);
+//			        	tempBok_tmp.title=testCursor.getString(1);
+//			        	tempBok_tmp.auther=testCursor.getString(2);
+//			        	tempBok_tmp.path=testCursor.getString(3);
+//			        	tempBok_tmp.pic_path=testCursor.getString(5);
+//			        	tempBok_tmp.intro=testCursor.getString(4);						
+//			        	Log.v("book",tempBok_tmp.title);
+//						}			
+						Log.v("book", "delete:"+SearchLocalFile.filenameArrayList.size());
+						WelcomActivity.EbookdDb.close();
 						Message.obtain(Handler_Msg.this, MOVE_BOOK, i, SearchLocalFile.filenameArrayList.size()).sendToTarget();
+					
 					}
 				});
+				
 				a.show();
 			}
 		}
@@ -181,6 +217,7 @@ public class Handler_Msg extends Handler{
 	 
 	public void addbook(ArrayList<String> name,ArrayList<String> path,List<PView> vec){	
 		int ddq=(vec.size()>name.size())? name.size():vec.size();
+		Log.d("book", "move:"+ddq);
 		int temp=0;
 		Log.v("book", name.toString());
 		for (int i = 0; i < vec.size(); i++) {
@@ -192,7 +229,7 @@ public class Handler_Msg extends Handler{
 		
 		WelcomActivity.EbookdDb.deletealldata(WelcomActivity.EbookdDb.getReadableDatabase());
 		
-		Log.v("book",""+1);
+	
 		for (int i = 0; i < ddq; i++) {
 			if(!vec.get(i).get_occupy()){
 				vec.get(i).set_inner_Visibility(View.VISIBLE);
@@ -203,8 +240,7 @@ public class Handler_Msg extends Handler{
 				vec.get(i).set_occupy(true);	
 				}		
 			temp++;
-		}
-		Log.v("book",""+2);
+		}		
 		for (int j = 0; j < SearchLocalFile.filenameArrayList.size();j++) {
 			WelcomActivity.EbookdDb.insertdata(WelcomActivity.EbookdDb.getReadableDatabase(),
 					j,
@@ -214,15 +250,16 @@ public class Handler_Msg extends Handler{
 					null,
 					null);	
 			}
-		Log.v("book",""+3);
+		Log.v("book", "add:"+SearchLocalFile.filenameArrayList.size());
 		
 		WelcomActivity.EbookdDb.close();
 			
-		Log.v("book", "add book successfully!");
+	
 	}
 	
 	public void movebook(ArrayList<String> name,ArrayList<String> path,List<PView> vec,int start_id){
 		int ddq=(vec.size()>name.size())? name.size():vec.size();
+		Log.d("book", "move:"+ddq);
 		for (int i = start_id; i < ddq; i++) {
 			if (vec.get(i).get_occupy())
 				Log.e("book", "error");
@@ -236,6 +273,7 @@ public class Handler_Msg extends Handler{
 				if (i!=ddq-1) {
 					vec.get(i+1).set_occupy(false);	
 				}
+				
 			}
 		}
 		EBookShelfActivity.pview_vec.get(ddq).init();
