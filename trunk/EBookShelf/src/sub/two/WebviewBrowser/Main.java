@@ -42,6 +42,7 @@ import android.os.Bundle;
 import android.os.Parcelable;
 import android.util.Log;
 import android.view.ContextMenu;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -573,7 +574,7 @@ public class Main extends Activity
     }
     @Override protected void onDestroy() {
     	showDialog(EXIT_ITEM);
-        //super.onDestroy();
+        super.onDestroy();
         Log.w("debug.onDestroy","onDestroy");
     } 
     
@@ -607,7 +608,7 @@ public class Main extends Activity
             @Override  
             public void onClick(DialogInterface dialog, int which) {  
                 dialog.dismiss();  
-                android.os.Process.killProcess(android.os.Process.myPid());  
+               finish(); 
             }  
         });  
         builder.setNegativeButton(R.string.no_btn,  
@@ -619,5 +620,6 @@ public class Main extends Activity
         });  
         builder.create().show();  
     }  
-	
+   
+
 }
