@@ -205,15 +205,15 @@ public class Handler_Msg extends Handler{
 			temp++;
 		}
 		Log.v("book",""+2);
-//		for (int j = 0; j < SearchLocalFile.filenameArrayList.size();j++) {
-//			WelcomActivity.EbookdDb.insertdata(WelcomActivity.EbookdDb.getReadableDatabase(),
-//					j,
-//					SearchLocalFile.filenameArrayList.get(j),
-//					SearchLocalFile.filepathArrayList.get(j),
-//					pview.get(j).get_Auther(),
-//					pview.get(j).get_intro(),
-//					pview.get(j).get_image_path());	
-//			}
+		for (int j = 0; j < SearchLocalFile.filenameArrayList.size();j++) {
+			WelcomActivity.EbookdDb.insertdata(WelcomActivity.EbookdDb.getReadableDatabase(),
+					j,
+					SearchLocalFile.filenameArrayList.get(j),
+					SearchLocalFile.filepathArrayList.get(j),
+					null,
+					null,
+					null);	
+			}
 		Log.v("book",""+3);
 		
 		WelcomActivity.EbookdDb.close();
