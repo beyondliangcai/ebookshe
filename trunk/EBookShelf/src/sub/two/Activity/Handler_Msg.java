@@ -21,7 +21,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 public class Handler_Msg extends Handler{
-//	public List<PView> pview=new ArrayList<PView>();
+	
 	public static List<PView> pview=new ArrayList<PView>();
 	
 	public static int TRUE=-95;
@@ -30,9 +30,10 @@ public class Handler_Msg extends Handler{
 	private int MOVE_BOOK=-93;
 	private List<String> s1=new ArrayList<String>();
 	private static int SHELF_NAME=20121200; 
+	private static int CHECK_SHELF=-91;
 	
 	public Handler_Msg() {
-//		pview=EBookShelfActivity.pview_vec;
+		
 	}
 
 	@Override
@@ -41,33 +42,7 @@ public class Handler_Msg extends Handler{
 		if(msg.what==EBookShelfActivity.ADD_BOOK_WHILE_START){
 			Log.v("book", "add book while the app starts");
 			if(SearchLocalFile.filenameArrayList.size()>EBookShelfActivity.pview_vec.size()) {
-				int i=SearchLocalFile.filenameArrayList.size()-EBookShelfActivity.pview_vec.size();
-				LinearLayout linearLayout=(LinearLayout)(EBookShelfActivity.sv).findViewById(R.id.main_shelf);
-				for (int j = 0; j < i/3+1; j++) {
-					View view=LayoutInflater.from(EBookShelfActivity.context).inflate(R.layout.shelf, null);
-					view.setId(SHELF_NAME+(++EBookShelfActivity.SHELF_COUNT));
-					linearLayout.addView(view);
-					
-					View shelf=EBookShelfActivity.sv.findViewById(SHELF_NAME+EBookShelfActivity.SHELF_COUNT);
-					View hr=shelf.findViewById(R.id.orgin_hline);
-					
-					TextView tx1=(TextView)shelf.findViewById(R.id.tv_in_shelf);
-					EBookShelfActivity.shelf_tv.add(tx1);
-					tx1.setText("shelf"+EBookShelfActivity.SHELF_COUNT);
-					
-					PView view1=(PView)hr.findViewById(R.id.IV1);
-					view1.set_id(EBookShelfActivity.ID_COUNT++);
-					EBookShelfActivity.pview_vec.add(view1);
-					
-					PView view2=(PView)hr.findViewById(R.id.IV2);
-					view2.set_id(EBookShelfActivity.ID_COUNT++);
-					EBookShelfActivity.pview_vec.add(view2);
-					
-					PView view3=(PView)hr.findViewById(R.id.IV3);
-					view3.set_id(EBookShelfActivity.ID_COUNT++);
-					EBookShelfActivity.pview_vec.add(view3);
-					
-				}
+				add_shelf(SearchLocalFile.filenameArrayList,EBookShelfActivity.pview_vec);
 			}
 			addbook(SearchLocalFile.filenameArrayList,
 					SearchLocalFile.filepathArrayList, EBookShelfActivity.pview_vec);
@@ -81,33 +56,8 @@ public class Handler_Msg extends Handler{
 			Bundle bundle=(Bundle)msg.obj;
 			
 			if(SearchLocalFile.filenameArrayList.size()>EBookShelfActivity.pview_vec.size()) {
-				int i=SearchLocalFile.filenameArrayList.size()-EBookShelfActivity.pview_vec.size();
-				LinearLayout linearLayout=(LinearLayout)(EBookShelfActivity.sv).findViewById(R.id.main_shelf);
-				for (int j = 0; j < i/3+1; j++) {
-					View view=LayoutInflater.from(EBookShelfActivity.context).inflate(R.layout.shelf, null);
-					view.setId(SHELF_NAME+(++EBookShelfActivity.SHELF_COUNT));
-					linearLayout.addView(view);
-					
-					View shelf=EBookShelfActivity.sv.findViewById(SHELF_NAME+EBookShelfActivity.SHELF_COUNT);
-					View hr=shelf.findViewById(R.id.orgin_hline);
-					
-					TextView tx1=(TextView)shelf.findViewById(R.id.tv_in_shelf);
-					EBookShelfActivity.shelf_tv.add(tx1);
-					tx1.setText("shelf"+EBookShelfActivity.SHELF_COUNT);
-					
-					PView view1=(PView)hr.findViewById(R.id.IV1);
-					view1.set_id(EBookShelfActivity.ID_COUNT++);
-					EBookShelfActivity.pview_vec.add(view1);
-					
-					PView view2=(PView)hr.findViewById(R.id.IV2);
-					view2.set_id(EBookShelfActivity.ID_COUNT++);
-					EBookShelfActivity.pview_vec.add(view2);
-					
-					PView view3=(PView)hr.findViewById(R.id.IV3);
-					view3.set_id(EBookShelfActivity.ID_COUNT++);
-					EBookShelfActivity.pview_vec.add(view3);
-					
-				}
+				Log.v("book", "more shelf is needed!");
+				add_shelf(bundle.getStringArrayList(SearchLocalFile.File_Name),EBookShelfActivity.pview_vec);
 			}
         	addbook(bundle.getStringArrayList(SearchLocalFile.File_Name),
         			bundle.getStringArrayList(SearchLocalFile.File_Path), EBookShelfActivity.pview_vec);
@@ -117,7 +67,7 @@ public class Handler_Msg extends Handler{
 		if(msg.what==MOVE_BOOK){
 			int i=msg.arg1;
 			try {
-				Thread.sleep(300);
+				Thread.sleep(100);
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -125,8 +75,7 @@ public class Handler_Msg extends Handler{
 			
 			movebook(SearchLocalFile.filenameArrayList, SearchLocalFile.filepathArrayList,
 					EBookShelfActivity.pview_vec, i);
-			
-			
+			Message.obtain(Handler_Msg.this,CHECK_SHELF).sendToTarget();
 		}
 		
 		//delete book
@@ -166,21 +115,8 @@ public class Handler_Msg extends Handler{
 								null);
 						
 						}
-						
-//						Cursor testCursor;
-//						testCursor=WelcomActivity.EbookdDb.getReadableDatabase().query("BookDB", new String[]{"id,title,path,auther,intro,pic"}, null, null, null, null, null);
-//			            
-//			            bok_tmp tempBok_tmp=new bok_tmp();
-//			        	while (testCursor.moveToNext()) {
-//			        	tempBok_tmp.id=testCursor.getInt(0);
-//			        	tempBok_tmp.title=testCursor.getString(1);
-//			        	tempBok_tmp.auther=testCursor.getString(2);
-//			        	tempBok_tmp.path=testCursor.getString(3);
-//			        	tempBok_tmp.pic_path=testCursor.getString(5);
-//			        	tempBok_tmp.intro=testCursor.getString(4);						
-//			        	Log.v("book",tempBok_tmp.title);
-//						}			
-						Log.v("book", "delete:"+SearchLocalFile.filenameArrayList.size());
+		
+						Log.v("book", "list size after delete:"+SearchLocalFile.filenameArrayList.size());
 						WelcomActivity.EbookdDb.close();
 						Message.obtain(Handler_Msg.this, MOVE_BOOK, i, SearchLocalFile.filenameArrayList.size()).sendToTarget();
 					
@@ -201,42 +137,62 @@ public class Handler_Msg extends Handler{
 		if (msg.what==PView.EDIT_BOOK) {
 			Log.d("book", "handle edit message!");
 			int i=msg.arg1;
-		}
+			}
 		
 		//change book state
 		if (msg.what==PView.CHANGE_BOOK_STATE) {
 			int id=msg.arg1;
 			try {
 				EBookShelfActivity.pview_vec.get(id).set_outer_Visibility(View.VISIBLE);
-			} catch (Exception e) {
-				// TODO: handle exception
-				Log.v("book", "failed id:"+id);
+				} catch (Exception e) {
+					// TODO: handle exception
+					Log.v("book", "failed id:"+id);
+					}
 			}
+		
+		//check if the shelf is empty
+		if (msg.what==CHECK_SHELF) {
+			int k=EBookShelfActivity.SHELF_COUNT;
+			Log.v("book", "shelf count:"+k); 
+			if(k>3){
+				LinearLayout layout=(LinearLayout)(EBookShelfActivity.sv).findViewById(R.id.main_shelf);
+				for (int i = k; i >3; i--) {
+					if(!EBookShelfActivity.pview_vec.get((i-1)*3).get_occupy()){
+						Log.v("book", "remove shelf at:"+i);
+						View view=EBookShelfActivity.sv.findViewById(SHELF_NAME+i);
+						EBookShelfActivity.shelf_tv.remove(i-1);
+						EBookShelfActivity.pview_vec.remove(3*EBookShelfActivity.SHELF_COUNT-1);
+						EBookShelfActivity.pview_vec.remove(3*EBookShelfActivity.SHELF_COUNT-2);
+						EBookShelfActivity.pview_vec.remove(3*EBookShelfActivity.SHELF_COUNT-3);
+						EBookShelfActivity.ID_COUNT-=3;
+						layout.removeView(view);
+						EBookShelfActivity.SHELF_COUNT--;
+					}
+				}
 			}
+		}
 	}
 	 
 	public void addbook(ArrayList<String> name,ArrayList<String> path,List<PView> vec){	
-		int ddq=(vec.size()>name.size())? name.size():vec.size();
-		Log.d("book", "move:"+ddq);
+//		int ddq=(vec.size()>name.size())? name.size():vec.size();
+		Log.d("book", "vec size:"+vec.size()+"          list size:"+name.size());
 		int temp=0;
-		Log.v("book", name.toString());
+		if(name.size()>vec.size()){
+			Log.v("book", "failed , add book has encounted an error");
+			return ;
+		}
+//		Log.v("book", name.toString());
 		for (int i = 0; i < vec.size(); i++) {
 			vec.get(i).init();
 		}
-//		for (int i = 0; i < vec.size(); i++) {
-//			Log.v("book",vec.get(i).get_Title() );
-//		}
 		
 		WelcomActivity.EbookdDb.deletealldata(WelcomActivity.EbookdDb.getReadableDatabase());
 		
-	
-		for (int i = 0; i < ddq; i++) {
+		for (int i = 0; i < name.size(); i++) {
 			if(!vec.get(i).get_occupy()){
 				vec.get(i).set_inner_Visibility(View.VISIBLE);
 				String[] st=name.get(temp).split("\\.");
-				if(st[0].length()>5)
-					st[0]=st[0].substring(0,5);
-				vec.get(i).set_Title(st[0]);
+				vec.get(i).set_Title(create_title(st[0]));
 				vec.get(i).set_occupy(true);	
 				}		
 			temp++;
@@ -250,7 +206,6 @@ public class Handler_Msg extends Handler{
 					null,
 					null);	
 			}
-		Log.v("book", "add:"+SearchLocalFile.filenameArrayList.size());
 		
 		WelcomActivity.EbookdDb.close();
 			
@@ -259,15 +214,13 @@ public class Handler_Msg extends Handler{
 	
 	public void movebook(ArrayList<String> name,ArrayList<String> path,List<PView> vec,int start_id){
 		int ddq=(vec.size()>name.size())? name.size():vec.size();
-		Log.d("book", "move:"+ddq);
+//		Log.d("book", "move:"+ddq);
 		for (int i = start_id; i < ddq; i++) {
 			if (vec.get(i).get_occupy())
 				Log.e("book", "error");
 			else {
 				String[] st=name.get(i).split("\\.");
-				if(st[0].length()>5)
-					st[0]=st[0].substring(0,5);
-				vec.get(i).set_Title(st[0]);
+				vec.get(i).set_Title(create_title(st[0]));
 				vec.get(i).set_inner_Visibility(View.VISIBLE);
 				vec.get(i).set_occupy(true);
 				if (i!=ddq-1) {
@@ -276,6 +229,62 @@ public class Handler_Msg extends Handler{
 				
 			}
 		}
-		EBookShelfActivity.pview_vec.get(ddq).init();
+		try {
+			EBookShelfActivity.pview_vec.get(ddq).init();
+		} catch (IndexOutOfBoundsException e) {
+			// TODO: handle exception
+			Log.e("book", "IndexOutOfBoundsException:"+ddq);
+		}
+	}
+
+	public void add_shelf(ArrayList<String> name,List<PView> vec) {
+		
+		int i=name.size()-vec.size();
+		int k=i%3;
+		Log.v("book", "list - vec = "+i);
+		LinearLayout linearLayout=(LinearLayout)(EBookShelfActivity.sv).findViewById(R.id.main_shelf);
+		
+		while(k!=0){
+			k=(++i)%3;
+		}
+		for (int j = 0; j < i/3; j++) {
+			View view=LayoutInflater.from(EBookShelfActivity.context).inflate(R.layout.shelf, null);
+			view.setId(SHELF_NAME+(++EBookShelfActivity.SHELF_COUNT));
+			linearLayout.addView(view);
+			
+			View shelf=EBookShelfActivity.sv.findViewById(SHELF_NAME+EBookShelfActivity.SHELF_COUNT);
+			View hr=shelf.findViewById(R.id.orgin_hline);
+			
+			TextView tx1=(TextView)shelf.findViewById(R.id.tv_in_shelf);
+			EBookShelfActivity.shelf_tv.add(tx1);
+			tx1.setText("shelf"+EBookShelfActivity.SHELF_COUNT);
+			
+			PView view1=(PView)hr.findViewById(R.id.IV1);
+			view1.set_id(EBookShelfActivity.ID_COUNT++);
+			vec.add(view1);
+			
+			PView view2=(PView)hr.findViewById(R.id.IV2);
+			view2.set_id(EBookShelfActivity.ID_COUNT++);
+			vec.add(view2);
+			
+			PView view3=(PView)hr.findViewById(R.id.IV3);
+			view3.set_id(EBookShelfActivity.ID_COUNT++);
+			vec.add(view3);
+			
+		}
+	}
+	
+	public String create_title(String s){
+		if (s.getBytes().length==s.length()) {
+			if (s.length()>8) {
+				s=s.substring(0,8);
+			}
+		}
+		else {
+			if (s.length()>4) {
+				s=s.substring(0,4);
+			}
+		}
+		return s;
 	}
 }
