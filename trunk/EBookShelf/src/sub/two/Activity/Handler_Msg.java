@@ -1,5 +1,6 @@
 package sub.two.Activity;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -181,7 +182,7 @@ public class Handler_Msg extends Handler{
 			Log.v("book", "failed , add book has encounted an error");
 			return ;
 		}
-//		Log.v("book", name.toString());
+//		Log.v("book", path.toString());
 		for (int i = 0; i < vec.size(); i++) {
 			vec.get(i).init();
 		}
@@ -193,6 +194,7 @@ public class Handler_Msg extends Handler{
 				vec.get(i).set_inner_Visibility(View.VISIBLE);
 				String[] st=name.get(temp).split("\\.");
 				vec.get(i).set_Title(create_title(st[0]));
+				vec.get(i).set_path(path.get(temp));
 				vec.get(i).set_occupy(true);	
 				}		
 			temp++;
@@ -222,6 +224,7 @@ public class Handler_Msg extends Handler{
 				String[] st=name.get(i).split("\\.");
 				vec.get(i).set_Title(create_title(st[0]));
 				vec.get(i).set_inner_Visibility(View.VISIBLE);
+				vec.get(i).set_path(path.get(i));
 				vec.get(i).set_occupy(true);
 				if (i!=ddq-1) {
 					vec.get(i+1).set_occupy(false);	
@@ -269,8 +272,7 @@ public class Handler_Msg extends Handler{
 			
 			PView view3=(PView)hr.findViewById(R.id.IV3);
 			view3.set_id(EBookShelfActivity.ID_COUNT++);
-			vec.add(view3);
-			
+			vec.add(view3);	
 		}
 	}
 	
@@ -286,5 +288,15 @@ public class Handler_Msg extends Handler{
 			}
 		}
 		return s;
+	}
+	
+	public void find_book(List<PView> vec,int i){
+		String string = vec.get(i).get_path();
+		if(string==null){
+			Log.v("book", "vec path is null");
+		}
+		else {
+			File file=new File(string);
+		}
 	}
 }

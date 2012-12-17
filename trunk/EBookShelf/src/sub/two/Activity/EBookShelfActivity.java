@@ -115,7 +115,7 @@ public class EBookShelfActivity extends Activity {
 	private void init_pview(){
         //默认控件初始化
         sv=(ScrollView)findViewById(R.id.scrollview_in_fr);
-        
+        sv.setVerticalScrollBarEnabled(false);
 		shelf=sv.findViewById(R.id.shelf1);
 		hr1=shelf.findViewById(R.id.orgin_hline);
 		
