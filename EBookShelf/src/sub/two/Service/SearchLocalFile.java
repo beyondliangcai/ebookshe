@@ -125,6 +125,7 @@ public class SearchLocalFile extends Service{
 		Bundle bundle=new Bundle();
 		bundle.putStringArrayList(File_Name, filenameArrayList);
 		bundle.putStringArrayList(File_Path, filepathArrayList);
+		
 		Handler_Msg handler_Msg=new Handler_Msg();
 		Message add=handler_Msg.obtainMessage(ADD_BOOK, bundle);
 		handler_Msg.sendMessage(add);
