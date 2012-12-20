@@ -7,6 +7,7 @@ import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
 
+import sub.two.PersonalView.PButton;
 import sub.two.PersonalView.PView;
 import sub.two.Service.SearchLocalFile;
 
@@ -14,16 +15,19 @@ import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
 import android.view.KeyEvent;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
@@ -39,16 +43,19 @@ public class EBookShelfActivity extends Activity {
 	public File Ebookdir;
 	
 	public static ScrollView sv;
+	private PButton pb1,pb2;
 	
-	public static int SHELF_COUNT=0;
+	public static int SHELF_COUNT=3;
 	public static int ID_COUNT=9;
-	private View shelf,shelf2,shelf3,hr1,hr2,hr3;
-	//public static Handler handler;
+
 	public static List<PView> pview_vec=new ArrayList<PView>();
-	public static List<TextView> shelf_tv=new ArrayList<TextView>();
+	public static List<LinearLayout> shelf_show=new ArrayList<LinearLayout>();
+	
 	public static Context context;
-	public static int ADD_BOOK_WHILE_START=-92;
+	public static PButton book_store;
 	private static int count=0;
+	public static Boolean longclick_mode=false;
+	
     @Override
     public void onCreate(Bundle savedInstanceState) {
     	 
@@ -62,7 +69,7 @@ public class EBookShelfActivity extends Activity {
         
         if(count==0){
         	Handler_Msg handle=new Handler_Msg();
-        	Message e=handle.obtainMessage(ADD_BOOK_WHILE_START);
+        	Message e=handle.obtainMessage(Handler_Msg.ADD_BOOK_WHILE_START);
         	handle.sendMessage(e);
         	count++;
         }
@@ -98,29 +105,41 @@ public class EBookShelfActivity extends Activity {
     	context=this;
     	//listener
     	Listener listener=new Listener(this);
+    	
         //登录事件  
         ImageView LoginImageView=(ImageView)findViewById(R.id.login);
         LoginImageView.setOnClickListener(listener.LogClickListener);
      
         //收索本地书籍并添加本地书籍的实现
-        ImageView searchlocalImageView =(ImageView)findViewById(R.id.search); 
-        searchlocalImageView.setOnClickListener(listener.search);
+        PButton searchlocal =(PButton)findViewById(R.id.search); 
+        searchlocal.set_text("添加");
+        searchlocal.setOnClickListener(listener.search);
         
         //连接服务器（书城）
-        ImageView book_store=(ImageView)findViewById(R.id.more);
+        book_store=(PButton)findViewById(R.id.more);
+        book_store.set_text(Handler_Msg.NORMAL_STATE);
+        book_store.set_text_size(18);
+        book_store.set_text_color(Color.WHITE);
         book_store.setOnClickListener(listener.book_store);
-        
+		
+		//book mark button
+		pb1=(PButton)findViewById(R.id.book_mark);
+		pb1.set_text("记录");
+		pb1.setOnClickListener(listener.book_mark);
+		
+		//set program
+		pb2=(PButton)findViewById(R.id.set_pro);
+        pb2.set_text("设定");
+        pb2.setOnClickListener(listener.set_pro);
     }
     
 	private void init_pview(){
         //默认控件初始化
         sv=(ScrollView)findViewById(R.id.scrollview_in_fr);
         sv.setVerticalScrollBarEnabled(false);
-		shelf=sv.findViewById(R.id.shelf1);
-		hr1=shelf.findViewById(R.id.orgin_hline);
-		
-		TextView tx1=(TextView)shelf.findViewById(R.id.tv_in_shelf);
-		shelf_tv.add(tx1);
+		View shelf=sv.findViewById(R.id.shelf1);
+		shelf_show.add((LinearLayout)shelf);
+		View hr1=shelf.findViewById(R.id.orgin_hline);
 		
 		PView v1=(PView)hr1.findViewById(R.id.IV1);
 		pview_vec.add(v1);
@@ -130,22 +149,22 @@ public class EBookShelfActivity extends Activity {
 		pview_vec.add(view3);
 		
 		//shelf2
-		shelf2=sv.findViewById(R.id.shelf2);
-		TextView tx2=(TextView)shelf2.findViewById(R.id.tv_in_shelf);
-		shelf_tv.add(tx2);
-		hr2=shelf2.findViewById(R.id.orgin_hline);
+		View shelf2=sv.findViewById(R.id.shelf2);
+		shelf_show.add((LinearLayout)shelf2);
+
+		View hr2=shelf2.findViewById(R.id.orgin_hline);
 		PView view4=(PView)hr2.findViewById(R.id.IV1);
 		pview_vec.add(view4);
 		PView view5=(PView)hr2.findViewById(R.id.IV2);
 		pview_vec.add(view5);
 		PView view6=(PView)hr2.findViewById(R.id.IV3);
 		pview_vec.add(view6);
-		
+		 
 		//shelf3
-		shelf3=sv.findViewById(R.id.shelf3);
-		TextView tx3=(TextView)shelf3.findViewById(R.id.tv_in_shelf);
-		shelf_tv.add(tx3);
-		hr3=shelf3.findViewById(R.id.orgin_hline);
+		View shelf3=sv.findViewById(R.id.shelf3);
+		shelf_show.add((LinearLayout)shelf3);
+
+		View hr3=shelf3.findViewById(R.id.orgin_hline);
 		PView view7=(PView)hr3.findViewById(R.id.IV1);
 		pview_vec.add(view7);
 		PView view8=(PView)hr3.findViewById(R.id.IV2);
@@ -153,15 +172,10 @@ public class EBookShelfActivity extends Activity {
 		PView view9=(PView)hr3.findViewById(R.id.IV3);
 		pview_vec.add(view9);
 		
-		for (int j = 1; j <= shelf_tv.size(); j++) {
-			shelf_tv.get(j-1).setText("shelf"+j);
-			SHELF_COUNT++;
-		}
-		Log.v("book", ""+SHELF_COUNT);
+//		Log.v("book", ""+SHELF_COUNT);
 		for (int i = 0; i < pview_vec.size(); i++) {
 			pview_vec.get(i).set_id(i);
 		}
 		
-
 	}
 }

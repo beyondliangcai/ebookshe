@@ -1,5 +1,6 @@
 package sub.two.PersonalView;
 
+import sub.two.Activity.EBookShelfActivity;
 import sub.two.Activity.Handler_Msg;
 import sub.two.Activity.R;
 import android.content.Context;
@@ -29,13 +30,15 @@ public class PView extends FrameLayout implements OnClickListener , OnLongClickL
 	private Boolean occupy=false;
 	private String pic_path;
 	private int id;
+	private Boolean is_editing=false;
 	
 	private int rc[]=new int[]{-1,-1};
+	private Boolean long_click=false;
 	
 	private ImageView iv;
 	private TextView tv;
 	private ImageView delete_book;
-	private ImageView edit_book;
+	private PButton edit_book;
 	
 	public static int DELETE_BOOK=-99;
 	public static int READ_BOOK=-98;
@@ -48,22 +51,26 @@ public class PView extends FrameLayout implements OnClickListener , OnLongClickL
 		super(context, attrs);
 		// TODO Auto-generated constructor stub
 	}
-
+	
 	@Override
 	protected void onFinishInflate(){
 		iv=(ImageView)findViewById(sub.two.Activity.R.id.iv_in_personalview);
 		tv=(TextView)findViewById(sub.two.Activity.R.id.tv_in_personalview);
 		delete_book=(ImageView)findViewById(sub.two.Activity.R.id.delete_book);
-		edit_book=(ImageView)findViewById(sub.two.Activity.R.id.edit_book);
+		edit_book=(PButton)findViewById(sub.two.Activity.R.id.edit_book);
 		
 		iv.setOnClickListener(this);
 		iv.setOnLongClickListener(this);
 		
 		delete_book.setOnClickListener(this);
 		edit_book.setOnClickListener(this);
+		
+		edit_book.setBitMap(R.drawable.edit_mode);
+		edit_book.set_text("±à¼­");
 		init();
+		
 		FrameLayout.LayoutParams params=(FrameLayout.LayoutParams)edit_book.getLayoutParams();
-		params.leftMargin=10;		
+		params.leftMargin=27;		
 		edit_book.setLayoutParams(params);
 	}
 	
@@ -89,12 +96,19 @@ public class PView extends FrameLayout implements OnClickListener , OnLongClickL
 			break;
 		}
 		Message e=handler_Msg.obtainMessage(idd, id, 0);
-		handler_Msg.sendMessage(e);
+		
+		if (long_click) {
+			if (v.getId()!=sub.two.Activity.R.id.iv_in_personalview) 
+				handler_Msg.sendMessage(e);
+		}
+		else
+			handler_Msg.sendMessage(e);
 	}
 	
 	@Override
 	public boolean onLongClick(View v) {
 		// TODO Auto-generated method stub
+		long_click=true;
 		Handler_Msg handle=new Handler_Msg();
 		int ss=-100;
 		switch (v.getId()) {
@@ -118,6 +132,7 @@ public class PView extends FrameLayout implements OnClickListener , OnLongClickL
 		intro="ÔÝÎÞ";
 		pic=null;
 		occupy=false;
+		is_editing=false;
 		
 		set_inner_Visibility(View.INVISIBLE);
 		set_outer_Visibility(View.GONE);
@@ -200,6 +215,10 @@ public class PView extends FrameLayout implements OnClickListener , OnLongClickL
 		pic_path=qq;
 	}
 	
+	public void set_editing(Boolean a){
+		is_editing=a;
+	}
+	
 	public void set_inner_Visibility(int visiable){
 		tv.setVisibility(visiable);
 		iv.setVisibility(visiable);
@@ -208,6 +227,18 @@ public class PView extends FrameLayout implements OnClickListener , OnLongClickL
 	public void set_outer_Visibility(int visiable){
 		delete_book.setVisibility(visiable);
 		edit_book.setVisibility(visiable);
+	}
+	
+	public void set_tv_paddingtop(int top) {
+		tv.setPadding(25, top, 0, 0);
+	}
+	
+	public void set_Edit_BitMap(int resId){
+		edit_book.setBitMap(resId);
+	}
+	
+	public void set_text_size(int i){
+		tv.setTextSize(i);
 	}
 	
 	public Boolean get_occupy(){
@@ -244,5 +275,9 @@ public class PView extends FrameLayout implements OnClickListener , OnLongClickL
 	
 	public int get_edit_id(){
 		return edit_book.getId();
+	}
+	
+	public Boolean get_editing(){
+		return is_editing;
 	}
 }

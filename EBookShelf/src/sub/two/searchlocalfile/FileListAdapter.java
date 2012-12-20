@@ -40,8 +40,8 @@ public class FileListAdapter extends BaseAdapter{
     paths = pa;
     sizes = si;
     isZoom = zm;
-    mIcon_folder = BitmapFactory.decodeResource(context.getResources(),R.drawable.folder2);      //文件夹的图文件
-    mIcon_file = BitmapFactory.decodeResource(context.getResources(),R.drawable.file);          //文件的图文件
+    mIcon_folder = BitmapFactory.decodeResource(context.getResources(),R.drawable.folder_image);      //文件夹的图文件
+    mIcon_file = BitmapFactory.decodeResource(context.getResources(),R.drawable.file_icon);          //文件的图文件
     mIcon_image = BitmapFactory.decodeResource(context.getResources(),R.drawable.image);        //图片的图文件
     mIcon_audio = BitmapFactory.decodeResource(context.getResources(),R.drawable.audio);        //音频的图文件
     mIcon_video = BitmapFactory.decodeResource(context.getResources(),R.drawable.video);        //视频的图文件
