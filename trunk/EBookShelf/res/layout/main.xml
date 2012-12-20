@@ -1,33 +1,67 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:orientation="vertical" 
     android:id="@+id/mainlayout"
     android:background="@drawable/background">
     
-    <RelativeLayout 
+    <FrameLayout 
         android:id="@+id/main_top_layout"
         android:layout_width="fill_parent"
-        android:layout_height="40dp"
-        android:background="@drawable/login_top_bg">      
-        <TextView
+        android:layout_height="45dp"
+        android:background="@drawable/top"
+        android:layout_alignParentTop="true"
+        android:orientation="horizontal">
+        <LinearLayout 
             android:layout_width="wrap_content"
-            android:layout_height="23dp"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <TextView 
+                android:layout_width="10dp"
+                android:layout_height="fill_parent"/>
+            <ImageView 
+	            android:src="@drawable/login"
+	            android:layout_width="50dp"
+	            android:layout_height="wrap_content"
+	            android:paddingTop="8dp"
+	            android:id="@+id/login"/>  
+        </LinearLayout>    
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="50dp"
             android:layout_marginLeft="5dp"
             android:layout_marginTop="5dp"
-            android:layout_centerInParent="true"
             android:textSize="17sp"
             android:textStyle="bold"
             android:textColor="#ffffff"
             android:text="@string/app_name2"
+            android:gravity="center"
            />
-    </RelativeLayout>
+        <include
+            layout="@layout/personalbutton"
+            android:id="@+id/more"
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:layout_marginBottom="5dp"
+            android:layout_marginTop="7dp"
+            android:layout_marginRight="5dp"/>
+    </FrameLayout>
+    
+    <include
+        android:id="@+id/menu_in_main_top"
+        android:layout_width="fill_parent"
+        android:layout_height="45dp"
+        android:layout_alignParentBottom="true"
+        layout="@layout/menu" />
+    
     <ScrollView 
         android:id="@+id/scrollview_in_fr"
         android:scrollbars="vertical"
+        android:layout_below="@id/main_top_layout"
+        android:layout_above="@id/menu_in_main_top"
         android:layout_width="fill_parent"
-        android:layout_weight="4"
         android:layout_height="wrap_content">
         <LinearLayout 
             android:id="@+id/main_shelf"
@@ -51,13 +85,4 @@
                 layout="@layout/shelf"/>
         </LinearLayout>
     </ScrollView>
-
-    <include
-        android:id="@+id/menu_in_main_top"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        layout="@layout/menu" />
-   
-
-</LinearLayout>
+</RelativeLayout>

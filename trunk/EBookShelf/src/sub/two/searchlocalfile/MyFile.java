@@ -8,12 +8,15 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 import sub.two.Activity.EBookShelfActivity;
+import sub.two.Activity.Listener;
 import sub.two.Activity.R;
 import sub.two.Activity.login;
+import sub.two.PersonalView.PButton;
 import sub.two.Service.SearchLocalFile;
 import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
 import android.app.ListActivity;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.DialogInterface.OnClickListener;
@@ -57,7 +60,7 @@ public class MyFile extends ListActivity  implements OnItemLongClickListener {
   private RadioGroup radioGroup;
   private RadioButton rb_file;
   private RadioButton rb_dir;
-  private ImageButton rb_qry;
+//  private ImageButton rb_qry;
   private int add_book=-9;
   private int [] flag=new int[100];
   protected final static int MENU_ADD =    Menu.FIRST;           //新建文件/文件夹
@@ -74,13 +77,14 @@ public class MyFile extends ListActivity  implements OnItemLongClickListener {
   public static String addpath="";
   public String localfile=new  String();
   private String str=new String();
+  public static Context context;
   
   @Override
   public boolean onCreateOptionsMenu(Menu menu){
     super.onCreateOptionsMenu(menu);
     /* 添加MENU */
     
-    menu.add(Menu.NONE, MENU_ADD, 0, R.string.dirAddButton).setIcon(R.drawable.file);
+    menu.add(Menu.NONE, MENU_ADD, 0, R.string.dirAddButton).setIcon(R.drawable.file_icon);
     menu.add(Menu.NONE, MENU_SET, 0, R.string.dirSetButton).setIcon(R.drawable.set);
     menu.add(Menu.NONE, MENU_ADDFILE, 0, R.string.dirAddfileButton).setIcon(R.drawable.add);//还差一张添加图片    ！！！
     menu.add(Menu.NONE, MENU_ABOUT,0, R.string.dirAboutButton).setIcon(R.drawable.info);
@@ -117,7 +121,7 @@ public class MyFile extends ListActivity  implements OnItemLongClickListener {
   public boolean onKeyDown(int keyCode,KeyEvent event) {   
       // 是否触发按键为back键   
       if (keyCode == KeyEvent.KEYCODE_BACK) {
-          path_edit=(EditText)findViewById(R.id.path_edit);  
+          path_edit=(TextView)findViewById(R.id.path_edit);  
           File file = new File(path_edit.getText().toString());
           if(rootPath.equals(path_edit.getText().toString())){
             return super.onKeyDown(keyCode,event); 
@@ -137,26 +141,57 @@ public class MyFile extends ListActivity  implements OnItemLongClickListener {
     super.onCreate(savedInstanceState);
     requestWindowFeature(Window.FEATURE_NO_TITLE);
   //  getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
-    getWindow().setBackgroundDrawableResource(R.drawable.background);
+//    getWindow().setBackgroundDrawableResource(R.drawable.background);
    
-    setContentView(R.layout.filelistlayout);  
-    setTheme(R.drawable.background);
+    setContentView(R.layout.searchlist);  
+//    setTheme(R.drawable.background);
+    
+    context=this;
     
     for (int i = 0; i < 100; i++) {
 		flag[i]=0;
 	}
     
     
-    path_edit = (EditText)findViewById(R.id.path_edit);
+    path_edit = (TextView)findViewById(R.id.path_edit);
     
-    rb_qry = (ImageButton)findViewById(R.id.qry_button);
-    rb_qry.setOnClickListener(listener_qry);
+//    rb_qry = (ImageButton)findViewById(R.id.qry_button);
+//    rb_qry.setOnClickListener(listener_qry);
     
     getListView().setOnItemLongClickListener(this);
    
-    
     getFileDir(rootPath);
+    
+    init();
   }
+  //pubtton init
+  private void init(){
+	  Listener listener=new Listener(this);
+	  
+	  //back button
+	  PButton back=(PButton)findViewById(R.id.back_to_shelf);
+	  back.set_text("返回");
+	  back.setBitMap(R.drawable.back_to_shelf);
+	  back.setOnClickListener(new View.OnClickListener() {
+		
+		@Override
+		public void onClick(View v) {
+			// TODO Auto-generated method stub
+			finish();
+		}
+	  });
+	  back.set_tv_padding(10, 0);
+	  back.set_text_size(16);
+	  back.setPadding(5, 7, 0, 0);
+	
+	  //search button
+	  PButton search_book=(PButton)findViewById(R.id.searck_book);
+	  search_book.set_text("");
+      search_book.setBitMap(R.drawable.search);
+	  search_book.setOnClickListener(listener.search_book);
+//	  search_book.set_padding(0, 3, 0, 0);
+  }
+  
   private void getFileName2(File[] files) {      
       if (files != null) {
       	 

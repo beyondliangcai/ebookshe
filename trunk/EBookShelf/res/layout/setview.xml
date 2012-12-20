@@ -1,39 +1,62 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-	android:layout_width="fill_parent" android:layout_height="fill_parent">
+	android:layout_width="fill_parent" 
+	android:layout_height="fill_parent">
 	<LinearLayout android:id="@+id/linearOpen"
-		android:orientation="horizontal" android:layout_height="wrap_content"
-		android:layout_width="fill_parent" android:padding="5dip">
-		<ImageView android:layout_width="45dip"
-			android:layout_height="45dip" android:src="@drawable/list">
+		android:orientation="horizontal" 
+		android:layout_height="wrap_content"
+		android:layout_width="fill_parent" 
+		android:padding="5dip">
+		<ImageView 
+		    android:layout_width="45dip"
+			android:layout_height="45dip" 
+			android:src="@drawable/list">
 		</ImageView>
 
-		<TextView android:id="@+id/textOpen" android:layout_gravity="center_vertical"
-			android:layout_width="wrap_content" android:layout_weight="15.0"
-			android:layout_height="wrap_content" android:textSize="20sp"
-			android:textColor="@drawable/white" android:text="@string/open">
+		<TextView 
+		    android:id="@+id/textOpen" 
+		    android:layout_gravity="center_vertical"
+			android:layout_width="wrap_content" 
+			android:layout_weight="15.0"
+			android:layout_height="wrap_content" 
+			android:textSize="20sp"
+			android:textColor="@drawable/white" 
+			android:text="@string/open">
 		</TextView>
 
-		<CheckBox android:id="@+id/checkOpen" android:layout_width="wrap_content"
+		<CheckBox android:id="@+id/checkOpen" 
+		    android:layout_width="wrap_content"
 			android:layout_height="wrap_content">
 		</CheckBox>
 	</LinearLayout>
 
-	<LinearLayout android:orientation="horizontal"
-		android:layout_height="wrap_content" android:layout_width="fill_parent"
-		android:padding="5dip" android:layout_below="@+id/linearOpen">
+	<LinearLayout 
+	    android:orientation="horizontal"
+		android:layout_height="wrap_content" 
+		android:layout_width="fill_parent"
+		android:padding="5dip" 
+		android:layout_below="@+id/linearOpen">
 
-		<ImageView android:layout_width="45dip"
-			android:layout_height="45dip" android:src="@drawable/list">
+		<ImageView 
+		    android:layout_width="45dip"
+			android:layout_height="45dip" 
+			android:src="@drawable/list">
 		</ImageView>
 
-		<TextView android:id="@+id/textZoom" android:layout_gravity="center_vertical"
-			android:layout_width="wrap_content" android:layout_weight="15.0"
-			android:layout_height="wrap_content" android:textSize="20sp"
-			android:textColor="@drawable/white" android:text="@string/zoom">
+		<TextView 
+		    android:id="@+id/textZoom" 
+		    android:layout_gravity="center_vertical"
+			android:layout_width="wrap_content" 
+			android:layout_weight="15.0"
+			android:layout_height="wrap_content" 
+			android:textSize="20sp"
+			android:textColor="@drawable/white" 
+			android:text="@string/zoom">
 		</TextView>
 
-		<CheckBox android:id="@+id/checkZoom" android:layout_width="wrap_content"
+		<CheckBox 
+		    android:id="@+id/checkZoom" 
+		    android:layout_width="wrap_content"
 			android:layout_height="wrap_content">
 		</CheckBox>
 	</LinearLayout>

@@ -5,8 +5,9 @@
     <ImageView 
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/b1"
-        android:paddingLeft="3dp"
+        android:src="@drawable/book_mode"
+        android:paddingLeft="7dp"
+        android:paddingTop="1dp"
         android:id="@+id/iv_in_personalview"
         />
     <TextView
@@ -14,19 +15,21 @@
         android:id="@+id/tv_in_personalview"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:paddingTop="14dp"
-        android:paddingLeft="11dp"
+        android:paddingTop="26dp"
+        android:paddingLeft="28dp"
         android:textColor="#000000"
-        android:textSize="12dp"/>
+        android:textSize="14dp"/>
     <ImageView 
         android:id="@+id/delete_book"
         android:src="@drawable/delete_book"
+        android:paddingLeft="9dp"
         android:layout_height="wrap_content"
         android:layout_width="wrap_content"/>
-    <ImageView
+    <include
+        layout="@layout/personalbutton"
         android:id="@+id/edit_book"
-        android:src="@drawable/edit_book"
         android:layout_height="wrap_content"
         android:layout_width="wrap_content"
-        android:layout_gravity="bottom"/>
+        android:layout_gravity="bottom"
+        android:layout_marginBottom="10dp"/>
 </sub.two.PersonalView.PView>

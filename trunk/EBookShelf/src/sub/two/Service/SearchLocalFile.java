@@ -129,7 +129,7 @@ public class SearchLocalFile extends Service{
 		Handler_Msg handler_Msg=new Handler_Msg();
 		Message add=handler_Msg.obtainMessage(ADD_BOOK, bundle);
 		handler_Msg.sendMessage(add);
-//		Log.v("book", "add book message");
+		Log.v("book",  filepathArrayList.toString());
 	}
 
 	@Override

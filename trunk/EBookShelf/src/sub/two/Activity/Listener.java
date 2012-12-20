@@ -1,9 +1,11 @@
 package sub.two.Activity;
 
+import sub.two.PersonalView.PButton;
 import sub.two.WebviewBrowser.Main;
 import sub.two.searchlocalfile.MyFile;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Message;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -19,6 +21,36 @@ public class Listener {
 		this.context=context;
 	}
 	
+	//set program
+	OnClickListener set_pro= new OnClickListener() {
+		
+		@Override
+		public void onClick(View v) {
+			// TODO Auto-generated method stub
+			
+		}
+	};
+	
+	//book mark
+    OnClickListener book_mark=new OnClickListener() {
+		
+		@Override
+		public void onClick(View v) {
+			// TODO Auto-generated method stub
+			
+		}
+	};
+	
+	//search book button
+	public OnClickListener search_book=new OnClickListener() {
+		
+		@Override
+		public void onClick(View v) {
+			// TODO Auto-generated method stub
+			
+		}
+	};
+	
 	//login listener
     OnClickListener  LogClickListener=new OnClickListener() {
     	@Override
@@ -30,7 +62,8 @@ public class Listener {
     		context.startActivity(intent);
     	}
     };
-    //search listener
+    
+    //add book listener
     OnClickListener search=new OnClickListener() {
 		
 		@Override
@@ -49,10 +82,21 @@ public class Listener {
 		@Override
 		public void onClick(View v) {
 			// TODO Auto-generated method stub
-			Intent webviewIntent=new Intent();
-			webviewIntent.setClass(context, Main.class);
-			context.startActivity(webviewIntent);
-			Log.v("book", "book store");
+			String textString=(String)((PButton)v).get_text();
+			if (textString.equals(Handler_Msg.EDIT_STATE)) {
+				Handler_Msg handler_Msg=new Handler_Msg();
+				Message e1=handler_Msg.obtainMessage(Handler_Msg.EDIT_FINISHED);
+				handler_Msg.sendMessage(e1);
+			}
+			if (textString.equals(Handler_Msg.NORMAL_STATE)) {
+				Intent webviewIntent=new Intent();
+				webviewIntent.setClass(context, Main.class);
+				context.startActivity(webviewIntent);
+				Log.v("book", "book store");
+			}
+			else {
+				Log.v("book", "error in store button");
+			}
 		}
 	};
 	
