@@ -9,6 +9,7 @@ import java.util.HashMap;
 
 import sub.two.Activity.EBookShelfActivity;
 import sub.two.Activity.Handler_Msg;
+import sub.two.Activity.login;
 import sub.two.DB.MyDB;
 import sub.two.searchlocalfile.MyFile;
 
@@ -121,7 +122,8 @@ public class SearchLocalFile extends Service{
 				e.printStackTrace();
 			}
 		}
-			
+		Log.v("book",filenameArrayList.toString());
+		Log.v("book",filepathArrayList.toString());	
 		Bundle bundle=new Bundle();
 		bundle.putStringArrayList(File_Name, filenameArrayList);
 		bundle.putStringArrayList(File_Path, filepathArrayList);
