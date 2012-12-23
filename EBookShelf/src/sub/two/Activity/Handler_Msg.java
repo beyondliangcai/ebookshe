@@ -271,6 +271,7 @@ public class Handler_Msg extends Handler{
 			return ;
 		}
 		Log.v("book", path.toString());
+	
 		for (int i = 0; i < vec.size(); i++) {
 			vec.get(i).init();
 		}
