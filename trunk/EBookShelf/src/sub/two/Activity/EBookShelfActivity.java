@@ -123,7 +123,7 @@ public class EBookShelfActivity extends Activity {
         book_store.setOnClickListener(listener.book_store);
 		
 		//book mark button
-		pb1=(PButton)findViewById(R.id.book_mark);
+		pb1=(PButton)findViewById(R.id.mark);
 		pb1.set_text("¼ÇÂ¼");
 		pb1.setOnClickListener(listener.book_mark);
 		

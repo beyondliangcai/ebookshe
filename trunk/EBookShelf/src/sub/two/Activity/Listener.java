@@ -37,7 +37,9 @@ public class Listener {
 		@Override
 		public void onClick(View v) {
 			// TODO Auto-generated method stub
-			
+			Intent intent=new Intent();
+			intent.setClass(context,Mark.class);
+			context.startActivity(intent);
 		}
 	};
 	
