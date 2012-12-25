@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="45dp"
+    android:background="@drawable/list_background" >
+    <FrameLayout 
+        android:id="@+id/fr_in_mark"
+        android:layout_width="fill_parent"
+        android:layout_alignParentTop="true"
+        android:background="@drawable/top"
+        android:layout_height="45dp">
+        <include
+            layout="@layout/personalbutton"
+            android:id="@+id/back_to_shelf_in_mark"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="7dp"/> 
+        <include 
+	        layout="@layout/marktop"
+	        android:id="@+id/mark_top"
+	        android:layout_gravity="center"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"/>
+    </FrameLayout>
+    <ListView 
+        android:id="@+id/liat_in_mark"
+        android:layout_below="@id/fr_in_mark"
+        android:divider="@drawable/between_mark_list"
+        android:layout_width="fill_parent"
+		android:layout_height="wrap_content"/>
+</RelativeLayout>

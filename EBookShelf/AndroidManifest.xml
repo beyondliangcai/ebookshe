@@ -66,6 +66,10 @@
             </intent-filter>         
         </activity>
         
+        <activity
+            android:name="sub.two.Activity.Mark">           
+        </activity>
+        
         <service android:name="sub.two.Activity.login" android:exported="false"/>
         <service android:name="sub.two.Service.SearchLocalFile" android:exported="false"/>
         <service android:name="sub.two.Service.AdaptScreenSize" android:exported="false"/>
