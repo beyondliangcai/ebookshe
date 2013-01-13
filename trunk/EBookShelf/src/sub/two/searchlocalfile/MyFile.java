@@ -35,6 +35,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.AbsListView.OnScrollListener;
+import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -52,7 +54,9 @@ public class MyFile extends ListActivity  implements OnItemLongClickListener {
   private List<String> items = null;   //items：存放显示的名称
   private List<String> paths = null;   //paths：存放文件路径
   private List<String> sizes = null;   //sizes：文件大小
-  private String rootPath="/";         //rootPath：起始文件夹
+ // private String rootPath=Environment.getExternalStorageDirectory().getPath();         //rootPath：起始文件夹,现在改成sd卡上的文件了，不再是根目录
+  private String rootPath="/"; 
+
   private TextView path_edit;
   private View myView;
   private TextView new_textView;
@@ -145,9 +149,9 @@ public class MyFile extends ListActivity  implements OnItemLongClickListener {
    
     setContentView(R.layout.searchlist);  
 //    setTheme(R.drawable.background);
-    
+   
     context=this;
-    
+   
     for (int i = 0; i < 100; i++) {
 		flag[i]=0;
 	}
@@ -157,13 +161,30 @@ public class MyFile extends ListActivity  implements OnItemLongClickListener {
     
 //    rb_qry = (ImageButton)findViewById(R.id.qry_button);
 //    rb_qry.setOnClickListener(listener_qry);
-    
+    getListView().setCacheColorHint(Color.TRANSPARENT); 
     getListView().setOnItemLongClickListener(this);
-   
+    
+	getListView().setOnScrollListener(new OnScrollListener() {
+		
+		@Override
+		public void onScrollStateChanged(AbsListView view, int scrollState) {
+			// TODO Auto-generated method stub
+			
+		}
+		
+		@Override
+		public void onScroll(AbsListView view, int firstVisibleItem,
+				int visibleItemCount, int totalItemCount) {
+			// TODO Auto-generated method stub
+			
+		}
+	});
     getFileDir(rootPath);
     
     init();
   }
+  
+  
   //pubtton init
   private void init(){
 	  Listener listener=new Listener(this);
@@ -196,10 +217,9 @@ public class MyFile extends ListActivity  implements OnItemLongClickListener {
       if (files != null) {
       	 
           for (File file : files) {  
-              if (file.isDirectory()) {         
+              if (file.isDirectory()) {     
 
-                  getFileName2(file.listFiles());    
-                  
+                  getFileName2(file.listFiles());                     
               } 
               else {  
                   String fileName = file.getName();  
@@ -215,6 +235,11 @@ public class MyFile extends ListActivity  implements OnItemLongClickListener {
           }  
       }  
   }  
+  
+  
+  
+  
+  //搜索文件
   Button.OnClickListener listener_qry = new Button.OnClickListener(){
     public void onClick(View arg0) {
     	File path = Environment.getExternalStorageDirectory();// 获得SD卡路径  
@@ -223,7 +248,7 @@ public class MyFile extends ListActivity  implements OnItemLongClickListener {
         
          str=path_edit.getText().toString();              
         getFileName2(files);     
-		System.out.println(localfile);    
+	  
 		 path_edit.setText(localfile);
 		    items = new ArrayList<String>();
 		    paths = new ArrayList<String>();
@@ -270,7 +295,7 @@ public class MyFile extends ListActivity  implements OnItemLongClickListener {
 //	  if (Math.abs(lastClickTime-System.currentTimeMillis()) < 1000))) {
 //		
 //	}
-	  //l.setCacheColorHint(Color.TRANSPARENT); 	 
+	  l.setCacheColorHint(Color.TRANSPARENT); 	 
 	  for (int i = 0; i < 100; i++) {
 		  if (i!=position) {
 			  flag[i]=0;		
@@ -282,10 +307,10 @@ public class MyFile extends ListActivity  implements OnItemLongClickListener {
 		 
 		 l.getChildAt(i).setSelected(false);
 		 l.getChildAt(i).setBackgroundColor(Color.TRANSPARENT);
-	       //  view.setBackgroundColor(Color.RED);
-	     //   view.setBackgroundResource(R.drawable.background);
+	     
 	  }
 	flag[position]++;
+
 	if (flag[position]%2==0) {
 		  File file = new File(paths.get(position));
 		    fileOrDirHandle(file,"short");
