@@ -4,24 +4,7 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     >
-	<LinearLayout
-		android:layout_width="fill_parent"
-		android:layout_height="wrap_content">
-		<EditText
-			android:id="@+id/edit_1"
-			android:layout_width="200dp"
-			android:layout_height="wrap_content"
-			android:textSize="15sp"
-			android:ellipsize="end"
-			android:lines="1">
-		</EditText>
-		<ImageButton
-			android:id="@+id/button_1"
-			android:layout_width="fill_parent"
-			android:layout_height="wrap_content"
-			android:src="@drawable/go">
-		</ImageButton>
-	</LinearLayout>
+	
 
 <FrameLayout 
     android:orientation="vertical"  

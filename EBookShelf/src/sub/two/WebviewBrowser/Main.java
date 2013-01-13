@@ -25,6 +25,7 @@ import sub.two.WebviewBrowser.HttpData;
 import sub.two.WebviewBrowser.SQLiteHelper;
 import sub.two.WebviewBrowser.WriteFavoriteXml;
 
+import android.R.color;
 import android.R.integer;
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -39,8 +40,10 @@ import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.util.Log;
@@ -52,6 +55,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.view.ContextMenu.ContextMenuInfo;
+import android.webkit.DownloadListener;
 import android.webkit.WebBackForwardList;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
@@ -77,7 +81,7 @@ public class Main extends Activity
     public Intent directCall;
     private WriteFavoriteXml writeXml = new WriteFavoriteXml();
     private ImageButton btn = null;
-    private EditText edit = null;
+  
     private ImageButton forwardBtn = null;
     private ImageButton backBtn = null;
     private ListView list = null;
@@ -86,6 +90,7 @@ public class Main extends Activity
     private GridView menuGrid, toolbarGrid;
     private AlertDialog menuDialog;
     private View menuView;
+    private String script ="function load_night(){	document.body.background= 'black';	} ";
     private boolean isMore = false;// menu菜单翻页控制
   
 	private final static int HTTP_ITEM = 1;	//关于
@@ -148,8 +153,10 @@ public class Main extends Activity
 	
 	// private String cur_url = "http://192.168.132.50:8080/EBookShelf/";
 	// private String first_page = "http://192.168.132.50:8080/EBookShelf/";
-    private String cur_url = "http://www.baidu.com/";	
-    private String first_page="http://www.baidu.com/";	
+	
+	
+    private String cur_url = "http://apk.hiapk.com/";	
+    private String first_page="http://apk.hiapk.com/";	
 	List<Map<String, Object>> history_data = new ArrayList<Map<String, Object>>();
 	List<HistoryBean> xml_data = new ArrayList<HistoryBean>();	
 	String[] dialog_data = new String[]{};
@@ -237,7 +244,12 @@ public class Main extends Activity
 					dialog();
 					break;
 				case DAY_NIGHT:
+					WebSettings webSettings = mWebView.getSettings(); 
+					webSettings.setJavaScriptEnabled(true);  
+					mWebView.loadUrl("javascript:document.body.background='black'");
 					menuDialog.dismiss();
+				
+				
 					
 					break;
 					
@@ -264,11 +276,11 @@ public class Main extends Activity
 			}
 		});
 
-        	edit = (EditText)findViewById(R.id.edit_1);
+        	
 
         	mWebView = (WebView) findViewById(R.id.wv1); 
 
-        	btn = (ImageButton)findViewById(R.id.button_1);
+     
         	// 创建底部菜单 Toolbar
     		toolbarGrid = (GridView) findViewById(R.id.GridView_toolbar);
     		toolbarGrid.setBackgroundResource(R.drawable.channelgallery_bg);// 设置背景
@@ -310,20 +322,7 @@ public class Main extends Activity
 //        	backBtn = (ImageButton)findViewById(R.id.back_btn);
 //        
     
-        btn.setOnClickListener( new Button.OnClickListener()
-        {
-            public void onClick( View v )
-            {
-                // TODO Auto-generated method stub
-            	String str = edit.getText().toString();
-            	if(str != "")
-            	{
-            		cur_url = str;
-            		setTitle();
-            		mWebView.loadUrl(str); 
-            	}
-            }
-        } );
+    
         
 //        forwardBtn.setOnClickListener( new Button.OnClickListener()
 //        {
@@ -411,6 +410,22 @@ public class Main extends Activity
             }           
         	});   
         
+        
+        
+        
+        //下载事件
+        mWebView.setDownloadListener(new DownloadListener() {
+			
+			@Override
+			public void onDownloadStart(String url, String userAgent,
+					String contentDisposition, String mimetype, long contentLength) {
+				// TODO Auto-generated method stub
+				Intent downIntent=new Intent();
+				downIntent.setClass(context, DownloadActivity.class);
+		           
+		            startActivity(downIntent);  
+			}
+		});
         	mWebView.loadUrl(cur_url);        
         	setTitle();
 
@@ -431,8 +446,7 @@ public class Main extends Activity
         drawable = new BitmapDrawable(bitmap);     
         //edit.setCompoundDrawables(drawable, null, null, null);
         drawable = this.getResources().getDrawable(R.drawable.history);
-        edit.setCompoundDrawablesWithIntrinsicBounds(drawable, null,null,null);  
-        edit.setText(cur_url);
+        
         //edit.setMaxLines(1);
     }
  
@@ -541,7 +555,7 @@ public class Main extends Activity
                     	if(selectId>=0)
                     	{
                     		cur_url = xml_data.get(selectId).getURL();
-                    		edit.setText(cur_url);
+                    		
                     		mWebView.loadUrl(cur_url);
                     	}
                     }
@@ -792,6 +806,7 @@ public class Main extends Activity
         });  
         builder.create().show();  
     }  
+    
     /**
 	 * 构造菜单Adapter
 	 * 
